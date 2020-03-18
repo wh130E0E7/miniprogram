@@ -1,0 +1,51 @@
+{
+  "pages": [
+      "pages/detail/detail",
+      "pages/index/index",
+    "pages/mine/mine",
+ 
+    
+    "pages/editor/editor",
+  
+    "pages/skin/skin",
+ 
+    "pages/notices/notices",
+    "pages/history/history",
+    "pages/favorite/favorite",
+    "pages/fellow/fellow",
+    "pages/search/search",
+    "pages/articles/articles",
+    "pages/actions/actions"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#0094ff",
+    "navigationBarTitleText": "SimpleCreate",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "icons/index.png",
+        "selectedIconPath": "icons/index_selected.png"
+      },
+      {
+        "pagePath": "pages/actions/actions",
+        "text": "动态",
+        "iconPath": "icons/actions.png",
+        "selectedIconPath": "icons/actions_selected.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "icons/mine.png",
+        "selectedIconPath": "icons/mine_selected.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

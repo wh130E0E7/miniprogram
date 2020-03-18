@@ -1,0 +1,5 @@
+<view>
+<scroll-view refresher-enabled style="height:100%" scroll-y>
+        <list></list>
+  </scroll-view>
+</view>

@@ -1,0 +1,65 @@
+.term {
+  border-bottom: 2rpx solid #ccc;
+  height: 225rpx;
+}
+
+.common {
+  margin-top: 5rpx;
+  padding-left: 10rpx;
+  display: flex;
+  flex-flow: row;
+}
+
+.avatar {
+  height: 40rpx;
+  width: 40rpx;
+  border-radius: 20rpx;
+}
+
+.nickname {
+  padding: 5rpx;
+  font-weight: 400;
+  padding-left: 10rpx;
+  font-size: 25rpx;
+}
+
+.title {
+  height: 50rpx;
+  font-size: 35rpx;
+  font-weight: 450;
+  overflow: hidden;
+  text-overflow: -o-ellipsis-lastline;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.content {
+  height: 80rpx;
+  font-weight: 200;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  align-content: center;
+  font-size: 30rpx;
+  color: rgb(182, 182, 192);
+}
+.icon{
+  height: 35rpx;
+  width: 35rpx;
+}
+.comment{
+  display: flex;
+  flex-flow: row;
+  padding: 5rpx;
+}
+.commentnums{
+  margin-left: 5px;
+  font-size: 25rpx;
+  font-weight: 50;
+  color: rgb(182, 182, 192);
+}

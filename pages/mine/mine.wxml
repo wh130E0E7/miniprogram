@@ -1,0 +1,32 @@
+<view wx:if="{{islogin}}">
+    <view class="user-info" style="background-image: url({{skin}})">
+         <view class="user-skin" bindtap="viewSkin"></view>
+        <image src="{{userInfo.avatarPath}}" class="user-avatar"></image>
+        <view class="user-nickname">
+            {{userInfo.nickname}}
+            <block wx:if="{{userInfo.gender == 1}}">
+                <view class="user-sex-male"></view>
+            </block>
+            <block wx:elif="{{userInfo.gender == 2}}">
+                <view class="user-sex-female"></view>
+            </block>
+        </view>
+        <view class="user-location">{{userInfo.province}},{{userInfo.city}}</view>
+    </view>
+    <view class="grids">
+        <block wx:for="{{gridList}}" wx:for-item="gridItem" wx:for-index="gridIndex" wx:key="grid">
+            <view class="grid" bindtap="viewGridDetail" data-url="{{gridItem.enName}}">
+                <view class="grid-icon grid-icon-{{gridItem.enName}}"></view>
+                <view class="grid-title">{{gridItem.zhName}}</view>
+            </view>
+        </block>
+    </view>
+    </view>
+<view wx:else>
+        <view class='header'>
+            <image src='../../icons/wx.png'></image>
+        </view>
+        <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+            微信一键登录
+        </button>
+</view>

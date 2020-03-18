@@ -1,0 +1,49 @@
+/* pages/detail/detail.wxss */
+
+.swiper-tab {
+  width: 100%;
+  border-bottom: 2rpx solid #ccc;
+  text-align: center;
+  height: 8vh;
+  line-height: 8vh;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.swiper-tab-item {
+  width: 30%;
+  color: #434343;
+}
+
+.active {
+  color: #f65959;
+  border-bottom: 4rpx solid #f65959;
+}
+
+.addArticle {
+  position: fixed;
+  bottom: 5px;
+  right: 45vw;
+  display: flex;
+  justify-content: center;
+}
+
+.addArticle image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 15px;
+}
+
+.notices {
+  position: fixed;
+  top: 80rpx;
+  display: flex;
+  right: 20rpx;
+  border-radius: 15px;
+}
+.notices image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 15px;
+}
