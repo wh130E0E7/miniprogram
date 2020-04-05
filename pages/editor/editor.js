@@ -212,6 +212,7 @@ Page({
     var content='';
     var summary='';
     var containImgpath='';
+    var token = wx.getStorageSync('token');
     if (this.data.title.length == 0) {
       console.log('标题不得为空');
       //this.showMsg('请写些内容吧');
@@ -240,8 +241,9 @@ Page({
     //提交文章
     wx.request({
       url: 'http://localhost:8080/article/insertArticle',
+      method: 'POST',
       header:{
-        token: app.globalData.token
+        token: token
       },
       data:{
         title:title,
@@ -254,7 +256,6 @@ Page({
       success:function(res){
         console.log(res)
         if(res.data.result=='success'){
-         
          wx.navigateBack({
            success:function(res){
              wx.showToast({
@@ -265,12 +266,15 @@ Page({
            }
          })
         }
-        else{
+        else if (res.data.result == 'fail'){
           wx.showToast({
             title: '文章发布失败',
             duration: 1000,
             icon: 'loading'
           })
+        }
+        else{
+          //登录过期，被拦截了
         }
       }
     })

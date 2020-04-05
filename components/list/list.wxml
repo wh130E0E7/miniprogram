@@ -3,7 +3,7 @@
     <image class="avatar" src="https://img-1301061617.cos.ap-nanjing.myqcloud.com/img/wxb2810458e3b57df3.o6zAJswPmyUQ467WdpP1mTdjOSW8.YjAQjZRE77EAfb7a2c86d412360724a9cd0b738ba416.png"></image>
     <text class="nickname">爱瞌睡的猫</text>
   </view>
-  <navigator url="../detail/detail">
+  <navigator url="../detail/detail?articleId=0be763b8bb68">
     <view class="common">
       <text class="title">上班第一天</text>
     </view>

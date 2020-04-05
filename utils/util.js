@@ -1,17 +1,4 @@
 var COS = require('./cos-wx-sdk-v5');
-const formatTime = date => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
-}
-const formatNumber = n => {
-  n = n.toString()
-  return n[1] ? n : '0' + n
-}
 //cos图片上传
 function upload(url){
   console.log(url);

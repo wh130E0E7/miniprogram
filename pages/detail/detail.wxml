@@ -8,28 +8,58 @@
     </view>
 </view>
 <!--作者信息-->
-<view>
-头像，昵称，关注
+<view class="userInfo">
+    <!--头像-->
+    <image class="avatar" src="{{author.avatar}}"></image>
+    <!--昵称-->
+    <view class="nickname">
+    {{author.nickname}}
+    </view>
+    <!--关注/取消关注按钮,需要传入作者的id,根据js中的isfollow判断显示关注还是已关注--> 
+        <view  class="unfollow" wx:if="{{isfollow}}" bindtap="follow">
+            已关注
+        </view>
+        <view  class="follow"  wx:else bindtap="follow">
+            关注
+        </view>
 </view>
 <!--正文-->
 <view class="content">
-    <template is="wxParse" data="{{wxParseData:content.nodes}}"/>
+    <template is="wxParse" data="{{wxParseData:content.nodes}}"></template>
+    <!--发表时间-->
+    <view class="publishTime">文章最后发布于： {{article.publishTime}}</view>
 </view>
+
 <!--功能栏-->
-<view>点赞，收藏</view>
+<view class='function'>
+<view>
+<!--点赞，根据js中的islike判断加载哪张图片--> 
+<image class="like" src="{{islike?'../../icons/like.png':'../../icons/like.png'}}" bindtap="like"></image>
+</view>
+<view>
+<!--收藏，根据js中的isfavorite判断加载哪张图片-->
+<image class="favorite" src="{{islike?'../../icons/favorite_selected.png':'../../icons/favorite.png'}}" bindtap="favorite"></image>
+</view>
+</view>
 
 <!--评论区-->
 <view class="commentView">
+    <!--如果评论数>10条，则只显示十条，剩下的需要点击查看所有评论才能查看，不足十条则全部显示-->
     <view wx:if="{{commentList}}">
         <view class="comment" wx:for="{{commentList}}">
-            <view class="avatar">
-                <image src="{{item.avatar}}" mode="scaleToFill"></image>
+            <!--只显示回复数，点击之后才显示所有回复-->
+            <view class="commentImg"><image class="avatar" src="{{item.avatar}}"></image></view>
+            <view class="commentDetail">
+            <view class="commnenterNickname">{{item.nickname}}</view>
+            <view class="commentContent">{{item.content}}</view>
+            <view class="publishTime_reply">
+            <view class="commentPublishTime">{{item.publishTime}}</view>
+            <view class="reply">回复Ta</view>
             </view>
-            <view class="commentInfo">
-                <view class="userName">{{item.username}}<view class="time">{{item.time}}</view></view>
-                <view class="commentContent"><text class="reply" wx:if="{{item.parent_username}}">回复@{{item.parent_username}}：</text>{{item.content}}</view>
+            <view  class="navigator" wx:if="{{item.replynum>0}}"><navigator url="../replyList/replyList">查看全部回复({{item.replynum}})</navigator></view>   
             </view>
         </view>
+        <view class='message'>暂无更多</view>
     </view>
     <view class="noComment" wx:else>
         <text>暂无评论，赶快抢沙发吧！</text>

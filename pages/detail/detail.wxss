@@ -1,12 +1,45 @@
 @import "/wxParse/wxParse.wxss";
 .titleView{
-    padding:8px;
+    padding:2px;
 }
-
 .title{
-    font-size: 25px;
+    font-size: 20px;
 }
-
+.userInfo{
+    padding:5px;
+    display:flex;
+    border-bottom: 2rpx solid #ccc;
+    margin-bottom: 50rpx;
+}
+.avatar{
+    height: 60rpx;
+    width: 60rpx;
+    border-radius: 30rpx;
+}
+.nickname{
+   margin-left: 20rpx;
+   margin-top: 10rpx;
+}
+.follow{
+    margin-left: 300rpx;
+    border: 2rpx solid #ccc;
+    color: red;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 50rpx;  /** 垂直居中 **/ 
+    text-align: center;   /** 水平居中 **/ 
+  }
+.unfollow{
+    margin-left: 300rpx;
+    border: 2rpx solid #ccc;
+    color: rgb(17, 16, 16);
+    background-color: white;
+    padding-left: 5px;
+    padding-right: 5px;
+    line-height: 50rpx;  /** 垂直居中 **/ 
+    text-align: center;   /** 水平居中 **/ 
+}
 .date{
     font-size: 15px;
     color:#aaa;
@@ -19,10 +52,35 @@
 }
 
 .content{
-    padding:8px;
-    margin-bottom:10px;
+background-color: rgba(241, 235, 235, 0.082);
+margin-bottom: 20rpx;
+}
+.publishTime{
+  margin-top: 20rpx;
+  height: 40rpx;
+  font-size: 30rpx;
+  text-align:right;
+  padding-top: 10rpx;
+  padding-right: 20rpx;
+  color: rgb(111, 121, 119);
+}
+.function{
+    height: 100rpx;
+    display: flex;
+    border-bottom: 2rpx solid #ccc;
+     background-color: rgb(241, 235, 235,0.082);
+}
+.function view{
+    width: 50vw;
+    align-items: center;
+    display: flex;
+    justify-content: center; 
 }
 
+.function image{
+    height: 60rpx;
+    width: 60rpx;
+}
 .commentBar{
     position: fixed;
     z-index:1;
@@ -57,9 +115,10 @@
 }
 
 .commentView{
+    margin-top: 20rpx;
     margin-bottom: 40px;
+    background-color: rgb(241, 235, 235,0.082);
 }
-
 .noComment{
     text-align: center;
     margin: 10px;
@@ -71,52 +130,53 @@
 }
 
 .comment{
-    margin-left: 8px;
+    margin-left: 4px;
     min-height:60px;
-    width:100%;
-    border-top:1px solid #eee;
+    width:100%; 
     padding-top:5px;
+    display: flex;
+    border-bottom:1px solid #eee;
 }
-
-.avatar{
-    float:left;
-    position: relative;
+.commentImg{
+  width: 10vw;
 }
-
-.avatar image{
-    margin: 5px;
-    width:30px;
-    height:30px;
-    border-radius: 15px; 
+.commentDetail{
+  width: 85vw;
 }
-
-.commentInfo{
-    padding:5px;
+.commnenterNickname{
+  font-size: 30rpx;
+  color: rgb(73, 73, 71);
 }
-
-.userName{
-    font-size:15px;
-    color:#000;
-    margin-bottom:5px;
-}
-
-.reply{
-   color:#4a86e8; 
-}
-
 .commentContent{
-    font-size:12px;
-    color:#555;
-    margin-right: 8px;
+  margin-top:10rpx;
+  font-size: 35rpx;
 }
-
-.time{
-    float:right;
-    position: relative;
-    font-size:10px;
-    color:#aaa;
-    margin-right:8px;
+.publishTime_reply{
+  display: flex;
+  margin-bottom: 10rpx;
+}
+.commentPublishTime{
+  color: rgba(133, 124, 124);
+  margin-top:10rpx;
+  font-size: 30rpx;
+}
+.reply{
+  color: rgb(133, 124, 124);
+  margin-left: 40rpx;
+  margin-top:10rpx;
+  font-size: 30rpx;
+}
+.navigator{
+    margin-bottom: 10rpx;
+  color: blue;
+  font-size: 35rpx;
+}
+.message{
+  height: 100rpx;
+  line-height: 100rpx;  /** 垂直居中 **/ 
+  text-align: center;   /** 水平居中 **/ 
 }
 .wxParse-p{
-  color: red;
+  font-size: 15px;
+  color: rgb(145, 145, 155);
 }

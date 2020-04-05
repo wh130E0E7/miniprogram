@@ -27,6 +27,6 @@
             <image src='../../icons/wx.png'></image>
         </view>
         <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
-            微信一键登录
+            微信一键授权登录
         </button>
 </view>

@@ -57,12 +57,12 @@ Page({
          wx.request({
              // 自行补上自己的 APPID 和 SECRET
              url: 'http://localhost:8080/user/wxLogin',
+             method: 'POST',
              data:{
                "code": res.code,
                "nickname": userinfo.nickName,
                "gender": userinfo.gender,
                "province": userinfo.province,
-               "age":20,
                "city":userinfo.city,
                "avatarPath": userinfo.avatarUrl
              },
