@@ -1,34 +1,48 @@
 <!--pages/detail/detail.wxml-->
 <view>
-<view class="swiper-tab">
-  <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">推荐</view>
-  <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">最热</view>
-  <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">最新</view>
-</view>
+  <view class="swiper-tab">
+    <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">推荐</view>
+    <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">最热</view>
+    <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">最新</view>
+  </view>
+  <swiper style="height:92vh" class="" current="{{currentTab}}" duration="300" bindchange="swiperTab">
+    <swiper-item>
+      <scroll-view refresher-enabled bindscrolltolower="loadMore" style="height:100%" scroll-y>
+        <list articleList="{{recommander}}"></list>
+        <view style="text-align: center;margin: 10px;">
+          <view wx:if="{{loading}}">加载中...</view>
+          <view wx:if="{{noMore}}">没有更多了</view>
+          <view wx:if="{{loadingFailed}}">数据加载失败,请重试</view>
+        </view>
+      </scroll-view>
+    </swiper-item>
 
-<swiper style="height:92vh" class="" current="{{currentTab}}" duration="300"  bindchange="swiperTab">
-  <swiper-item>
-   <scroll-view refresher-enabled  bindscrolltolower="loadMore" style="height:100%" scroll-y>
-             <list></list>   
-  </scroll-view>
-</swiper-item>
+    <swiper-item>
+      <scroll-view refresher-enabled  lower-threshold="50" bindscrolltolower="hot_loadMore" style="height:100%" scroll-y>
+        <list articleList="{{hotlist}}"></list>
+        <view style="text-align: center;margin: 10px;">
+          <view wx:if="{{hot_loading}}">加载中...</view>
+          <view wx:if="{{hot_noMore}}">没有更多了</view>
+          <view wx:if="{{hot_loadingFailed}}">数据加载失败,请重试</view>
+        </view>
+      </scroll-view>
+    </swiper-item>
 
-  <swiper-item>  
-  <scroll-view refresher-enabled style="height:100%" scroll-y>
-          <list></list>
-  </scroll-view>
-  </swiper-item>
-
-  <swiper-item>  
-  <scroll-view refresher-enabled style="height:100%" scroll-y>
-          <list></list>
-  </scroll-view>
-  </swiper-item> 
-</swiper>
-<view class="addArticle" bindtap="navigateToAddArticle">
-  <image src="../../icons/addArticle.png"></image>
-</view>
-<view class="notices" bindtap="navigateToNotices">
- <image src="../../icons/notices.png"></image>
-</view>
+    <swiper-item>
+      <scroll-view refresher-enabled bindscrolltolower="new_loadMore" style="height:100%" scroll-y>
+        <list articleList="{{newlist}}"></list>
+        <view style="text-align: center;margin: 10px;">
+          <view wx:if="{{new_loading}}">加载中...</view>
+          <view wx:if="{{new_noMore}}">没有更多了</view>
+          <view wx:if="{{new_loadingFailed}}">数据加载失败,请重试</view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+  <view  class="addArticle" bindtap="navigateToAddArticle">
+    <image src="../../icons/addArticle.png"></image>
+  </view>
+  <view class="notices" bindtap="navigateToNotices">
+    <image src="../../icons/notices.png"></image>
+  </view>
 </view>

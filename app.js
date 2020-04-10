@@ -6,7 +6,6 @@ App({
     that.globalData.token =wx.getStorageSync('token')
     console.log(that.globalData.token);
     //检查该用户账号是否过期，没过期直接加载userinfo
-    //过期就直接跳转个人中心提示登录
     wx.request({
       url: 'http://localhost:8080/user/checkLogin',
       data:{
@@ -16,6 +15,33 @@ App({
         if(res.data.islogin){
           that.globalData.userInfo=res.data.userInfo
           that.globalData.islogin=true
+           //连接websocket
+           
+           //判断关注的人有无新动态，有的话在动态栏上显示数字
+           that.load_action_size()
+        }
+      }
+    })
+  },
+  load_action_size:function(){
+    wx.request({
+      url: 'http://localhost:8080/user/getActionSize',
+      header:{
+        token: wx.getStorageSync('token')
+      },
+      success:function(res){
+        if(res.data>0){
+          if (res.data > 100){
+            wx.setTabBarBadge({
+              index: 1,
+              text: '99+',
+            })
+          }else{
+            wx.setTabBarBadge({
+              index: 1,
+              text: '' + res.data + '',
+            })
+          }
         }
       }
     })

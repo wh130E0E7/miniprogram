@@ -7,15 +7,15 @@
         <input type="text" class="input" placeholder="请输入标题..." bindinput="bindTitleInput" />
         <!--类别-->
         <view class="type">
-        <view class="text"> 请选择文章类别：</view> 
-        <picker bindchange="bindPickerChange" value="{{index}}" range="{{typeArray}}" range-key="name">
-          <view class="picker">
-            {{typeArray[index].name}}
-             <image class="below" src="../../icons/below.png"></image>
-          </view>
-          
-        </picker>
-        
+          <view class="text"> 请选择文章类别：</view>
+          <picker bindchange="bindPickerChange" value="{{index}}" range="{{typeArray}}" range-key="typeContent">
+            <view class="picker">
+              {{typeArray[index].typeContent}}
+              <image class="below" src="../../icons/below.png"></image>
+            </view>
+
+          </picker>
+
         </view>
         <!--标签-->
         <input type="text" class="input" placeholder="添加标签，帮助大家更好的找到这篇文章" bindinput="bindTagInput" />

@@ -11,7 +11,7 @@ Component({
     //   // value  默认值
     //   value:""
     // }
-    tabs:{
+    articleList:{
       type:Array,
       value:[]
     }

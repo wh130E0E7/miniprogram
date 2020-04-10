@@ -1,24 +1,24 @@
-<view class="term" wx:for="1234567777777" wx:key="unique">
+<view class="term" wx:for="{{articleList}}" wx:key="unique">
   <view class="common">
-    <image class="avatar" src="https://img-1301061617.cos.ap-nanjing.myqcloud.com/img/wxb2810458e3b57df3.o6zAJswPmyUQ467WdpP1mTdjOSW8.YjAQjZRE77EAfb7a2c86d412360724a9cd0b738ba416.png"></image>
-    <text class="nickname">爱瞌睡的猫</text>
+    <image class="avatar" src="{{item.author.avatarPath}}"></image>
+    <text class="nickname">{{item.author.nickname}}</text>
   </view>
-  <navigator url="../detail/detail?articleId=0be763b8bb68">
+  <navigator url="../detail/detail?articleId={{item.articleId}}">
     <view class="common">
-      <text class="title">上班第一天</text>
+      <text class="title">{{item.title}}</text>
     </view>
     <view class="common content">
-      年前买了40个口罩觉得很多，过年才发现家人都没买上，于是给年前买了40个口罩觉得很多，过年才发现家人都没买上，于是给年前买了40个口罩觉得很多，过年才发现家人都没买上，于是给
+      {{item.summary}}
     </view>
   </navigator>
   <view class="common">
     <view class="comment">
       <image class="icon" src="../../icons/comment.png"></image>
-      <view class="commentnums">5</view>
+      <view class="commentnums">{{item.commentNums}}</view>
     </view>
     <view class="comment">
       <image class="icon" src="../../icons/recommender.png"></image>
-      <view class="commentnums">5</view>
+      <view class="commentnums">{{item.likeNums}}</view>
     </view>
   </view>
 </view>

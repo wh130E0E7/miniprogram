@@ -1,15 +1,18 @@
 {
   "pages": [
-    "pages/detail/detail",
     "pages/index/index",
+    "pages/detail/detail",
+    "pages/replyList/replyList",
+   
+    
     "pages/mine/mine",
-     "pages/replyList/replyList", 
+
     "pages/editor/editor",
     "pages/skin/skin",
     "pages/notices/notices",
     "pages/history/history",
     "pages/favorite/favorite",
-    "pages/fellow/fellow",
+    "pages/follow/follow",
     "pages/search/search",
     "pages/articles/articles",
     "pages/actions/actions"

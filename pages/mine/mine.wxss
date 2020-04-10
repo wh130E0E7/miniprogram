@@ -1,7 +1,7 @@
 .user-info {
     box-sizing: border-box;
     width: 750rpx;
-    height: 400rpx;
+    height: 350rpx;
     padding: 30rpx 0;
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@
     border: 4rpx solid #fff;
     border-radius: 60rpx;
     background-color: rgba(0, 0, 0, .3);
-    background-image: url(https://img-1301061617.cos.ap-nanjing.myqcloud.com/img/wxb2810458e3b57df3.o6zAJswPmyUQ467WdpP1mTdjOSW8.YjAQjZRE77EAfb7a2c86d412360724a9cd0b738ba416.png);
+    background-image: url(https://img-1301061617.cos.ap-nanjing.myqcloud.com/skin/skin.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 40rpx;
@@ -61,7 +61,7 @@
 }
 
 .user-location {
-    font-size: 24rpx;
+    font-size: 35rpx;
     color: #eee;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, .6);
 }

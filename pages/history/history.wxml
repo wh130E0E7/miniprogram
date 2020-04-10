@@ -1,5 +1,10 @@
- <view>
- <scroll-view refresher-enabled  style="height:100%" scroll-y>
-          <list></list>   
-  </scroll-view>
+<view style="height:100vh">
+<scroll-view refresher-enabled bindscrolltolower="loadMore"  style="height:100%" scroll-y>
+  <list articleList="{{articleList}}"></list>
+  <view style="text-align: center;margin: 10px;">
+    <view wx:if="{{loading}}">加载中...</view>
+    <view wx:if="{{noMore}}">没有更多了</view>
+    <view wx:if="{{loadingFailed}}">数据加载失败,请重试</view>
   </view>
+</scroll-view>
+</view>

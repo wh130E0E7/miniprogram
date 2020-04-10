@@ -1,175 +1,248 @@
 var WxParse = require('../../wxParse/wxParse.js');
 var Util = require('../../utils/util.js');
-var article_id = ''
+var app = getApp();
+var articleId = ''
+var title = ''
+var authorId=''
 var myComment = ''
+var token = ''
 Page({
   data:{
-    author:{  avatar:'https://img-1301061617.cos.ap-nanjing.myqcloud.com/img/wxb2810458e3b57df3.o6zAJswPmyUQ467WdpP1mTdjOSW8.YjAQjZRE77EAfb7a2c86d412360724a9cd0b738ba416.png',
-      nickname:'爱瞌睡的猫'
-    },
-    article:{
-        title:'钟南山团队开发出新型试剂盒：一滴血15分钟出结果，现场即可检测',
-        content: '<p>新冠病毒非常狡猾，具有超长潜伏期。最近，越来越多的检测产品已经研制出来，针对不同情况，更高效、便捷、安全地进行检测。据了解，钟南山团队于近日成功研发了一款新型的新冠病毒抗体检测试剂盒。该试剂盒仅需采取一滴血就有望在15分钟内肉眼观察得出结果，大大缩短了检测的时间。</p> <img src="https://img-1301061617.cos.ap-nanjing.myqcloud.com/img/wxb2810458e3b57df3.o6zAJswPmyUQ467WdpP1mTdjOSW8.mhpO9ON0qd8m1602dea1cdee73c9ccf97b4f5ee72785.jpeg"></img> <p>它应用胶体金免疫层析技术，采用间接法检测新型冠状病毒（SARS-COV2）IgM抗体。据多个中心的临床标本检测评价证实，该检测试剂临床检测的敏感性高达88.66%，检测特异性为90.63%；IgM-IgG联合抗体检测的敏感性远高于IgM或IgG单抗体检测。这样一来，能够有效突破现有检测技术对人员、场所的限制，缩短时间的同时，也可以实现现场筛查、指尖即可采血，将更快发现感染者！据悉，目前该试剂盒（科研用）样品已送至湖北省多地基层卫生机构，用于新冠病毒感染检测。近日，这一研究的具体结果，已经在线发表在《医学病毒学杂志》上。</p>',
-       read_cnt:5586,
-       publishTime:'2020-03-25',
-    },
-    commentList: [
-      {
-        avatar: 'https://img-1301061617.cos.ap-nanjing.myqcloud.com/img/wxb2810458e3b57df3.o6zAJswPmyUQ467WdpP1mTdjOSW8.YjAQjZRE77EAfb7a2c86d412360724a9cd0b738ba416.png',
-        nickname: '爱瞌睡的猫',
-        content: '这是一篇好文章============================',
-        publishTime: '2020-03-25',
-        replynum: 0
-      },
-      {
-        avatar: 'https://img-1301061617.cos.ap-nanjing.myqcloud.com/img/wxb2810458e3b57df3.o6zAJswPmyUQ467WdpP1mTdjOSW8.YjAQjZRE77EAfb7a2c86d412360724a9cd0b738ba416.png',
-        nickname: '爱瞌睡的猫',
-        content: '这是一篇好文章',
-        publishTime: '2020-03-25',
-        replynum: 5
-      },
-      {
-        avatar: 'https://img-1301061617.cos.ap-nanjing.myqcloud.com/img/wxb2810458e3b57df3.o6zAJswPmyUQ467WdpP1mTdjOSW8.YjAQjZRE77EAfb7a2c86d412360724a9cd0b738ba416.png',
-        nickname: '爱瞌睡的猫',
-        content: '这是一篇好文章',
-        publishTime: '2020-03-25',
-        replynum: 1
-      }
-    ],
+    article:{},
+    commentList: [],
     isfollow: false,
     islike:false,
-    isfavorite:false
+    isfavorite:false,
+    inputcontent:'',
+    iscomment:true,
+    placeholder:'',
+    focus:true,
+    commentId:'',
+    index:null,
+    receiverId:'',
+    receiverNickname:''
   },
   onTextChanged: function(e){
     myComment = e.detail.value
   },
-  onSendClicked: function(e){
-    //判断是否登录
+  onLoad:function(options){
+    token=wx.getStorageSync('token');
+    articleId = options.articleId 
+    //articleId = '626a234a-6478-43fa-a8c4-54b4469e5be7'
+    //请求文章详情
+    wx.showLoading({
+      title: '加载中',
+    })
+    this.loadArticle();
     
-    var that = this
-    //发送评论评论 该功能无法使用，仅作保留
     wx.request({
-      url: 'http://localhost:8080/news/comment',
-        method: 'POST',
-        data : {
-          uid:'',
-          token:'',
-          article_id: article_id,
-          content: myComment
-        },
-        header: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        success : function(res){
-          //（需要判断是否登录失效）
-          //评论成功成功
-          wx.showToast({
-            title: '评论成功',
-            icon: 'success',
-            duration: 2000
-          })
-          //刷新评论
-          that.loadComments()
-        }
+      url: 'http://localhost:8080/article/selectArticleByIdForLoginUser',
+      data:{
+        articleId:articleId
+      },
+      header:{
+        token: token,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+    //加载评论'
+    this.loadComments();
+  },
+  //加载文章
+  loadArticle:function(){
+    var that = this
+    wx.request({
+      url: 'http://localhost:8080/article/selectArticleById',
+      method: 'GET',
+      data: {
+        //文章id由列表栏传递过来
+        articleId: articleId
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        var _content = res.data.article.content;
+        title = res.data.article.title;
+        authorId = res.data.article.author.openid;
+        wx.hideLoading()
+        //文章加载成功，则加载是否关注，评论，收藏等
+        that.load();
+        that.setData({
+          article: res.data.article
+        });
+        WxParse.wxParse('content', 'html', _content, that, 0);
+      }
     })
   },
-  onLoad:function(options){
-    var that = this
-    article_id = options.articleId 
-    WxParse.wxParse('content', 'html',this.data.article.content, that, 0);
-    //请求文章详情
-    wx.request({
-        url : 'http://localhost:8080/article/selectArticleById',
+  //加载关注，点赞，收藏
+  load:function(){
+    //登录则判断
+    if (app.globalData.islogin) {
+      var that = this;
+      //判断是否关注了该作者
+      wx.request({
+        url: 'http://localhost:8080/article/isFollow',
         method: 'GET',
-        data : {
-          //文章id由列表栏传递过来
+        data: {
+          //作者id
+          authorId: authorId
+        },
+        header: {
+          token: token,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        success: function (res) {
+          if (res.data) {
+            that.setData({
+              isfollow: true
+            })
+          }
+        }
+      })
+      //判断该文章是否点赞了
+      wx.request({
+        url: 'http://localhost:8080/article/isLike',
+        method: 'GET',
+        data: {
+          articleId: articleId
+          //文章id
+        },
+        header: {
+          token: token,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        success: function (res) {
+          //根据res.result判断是否关注了然后修改islike
+          if (res.data) {
+            that.setData({
+              islike: true
+            })
+          }
+        }
+      })
+      //判断该文章是否收藏了
+      wx.request({
+        url: 'http://localhost:8080/article/isFavorite',
+        method: 'GET',
+        data: {
           articleId: articleId
         },
         header: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+           token: token,
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
-        success : function(res){
-          var _content = res.data.article['content']
-          that.setData({
-              article: res.data.article
-          });
-          WxParse.wxParse('content', 'html', _content, that,0);
+        success: function (res) {
+          //根据res.result判断是否关注了然后修改isfavorite
+          if (res.data) {
+            that.setData({
+              isfavorite: true
+            })
+          }
         }
-    })
-    //加载评论
-    this.loadComments();
-
-    //登录则判断
-
-    //判断是否关注了该作者
-    wx.request({
-      url: '',
-      method: 'GET',
-      data: {
-        //用户token
-        
-        //作者id
-        
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      success: function (res) {
-        //关注了则修改isfollow
-      }
-    })
-    //判断该文章是否点赞了
-    wx.request({
-      url: '',
-      method: 'GET',
-      data: {
-        //用户token
-
-        //文章id
-
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      success: function (res) {
-        //根据res.result判断是否关注了然后修改islike
-      }
-    })
-    //判断该文章是否收藏了
-    wx.request({
-      url: '',
-      method: 'GET',
-      data: {
-        //用户token
-
-        //文章id
-
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      success: function (res) {
-        //根据res.result判断是否关注了然后修改isfavorite
-      }
-    })
+      })
+    }
   },
+  //关注
   follow:function(){
-  //判断是否登录
-  //关注，取消关注（需要判断是否登录失效）
-  },
-  like:function(){
+    var that=this;
     //判断是否登录
-    //点赞，取消点赞（需要判断是否登录失效）
+    if (!app.globalData.islogin) {
+      //提示登录
+    } else {
+    //关注，取消关注（需要判断是否登录失效）
+      wx.request({
+        url: 'http://localhost:8080/article/follow',
+        data:{
+          authorId:authorId
+        },
+        header:{
+          token:token
+        },
+        success:function(res){
+          //操作成功
+          if(res.data){
+            that.setData({
+              isfollow:!that.data.isfollow
+            })
+          }else if(res.data==false){
+            //操作失败
+          }else{
+            //登录过期
+          }
+        }
+      })
+    }
   },
+  //点赞
+  like:function(){
+    var that = this;
+    //判断是否登录
+    if (!app.globalData.islogin){
+      //提示登录
+    }else{
+       //点赞，取消点赞（需要判断是否登录失效）
+      wx.request({
+        url: 'http://localhost:8080/article/like',
+        data:{
+          authorId:authorId,
+          articleId:articleId,
+          title:title
+        },
+        header: {
+          token: token
+        },
+        success:function(res){
+          //操作成功
+          if (res.data) {
+            that.setData({
+              islike: !that.data.islike
+            })
+          } else if (res.data == false) {
+            //操作失败
+          } else {
+            //登录过期
+          }
+        }
+      })
+    }
+  },
+  //收藏
   favorite:function(){
-      //判断是否登录
-    //收藏，取消收藏（需要判断是否登录失效）
+    var that = this;
+    //判断是否登录
+    if (!app.globalData.islogin) {
+      //提示登录
+    } else {
+      wx.request({
+        url: 'http://localhost:8080/article/favorite',
+        data: {
+          articleId: articleId,
+        },
+        header: {
+          token: token
+        },
+        success: function (res) {
+          //操作成功
+          if (res.data) {
+            that.setData({
+              isfavorite: !that.data.isfavorite
+            })
+          } else if (res.data == false) {
+            //操作失败
+          } else {
+            //登录过期
+          }
+        }
+      })
+    } 
   },
+  //加载评论
   loadComments:function(){
     var that = this
     //请求评论
     wx.request({
-      url: 'http://localhost:8080/article/commentList',
+      url: 'http://localhost:8080/article/getCommentList',
         method: 'GET',
         data : {
           articleId: articleId
@@ -178,8 +251,147 @@ Page({
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         success : function(res){
-          
+          that.setData({
+            commentList:res.data
+          })    
         }
     }) 
+  },
+  //发表评论
+  sendComment: function (e) {
+    //判断是否登录
+    if (!app.globalData.islogin){
+      //请先登录
+      return;
+    }
+    var that = this
+    //发送评论评论 该功能无法使用，仅作保留
+    wx.request({
+      url: 'http://localhost:8080/article/insertComment',
+      method: 'GET',
+      header: {
+        token: token
+      },
+      data: {
+        articleId: articleId,
+        //标题也带上
+        title: title,
+        commentContent: myComment,
+        receiverId: authorId
+      },
+      success: function (res) {
+        if (res.data == true) {
+          //评论成功成功
+          wx.showToast({
+            title: '评论成功',
+            icon: 'success',
+            duration: 2000,
+          })
+          //清空输入栏
+          that.setData({
+            inputcontent: ''
+          })
+          //刷新评论
+          that.loadComments()
+        } else if (res.data == true) {
+          wx.showToast({
+            title: '评论失败',
+            icon: 'success',
+            duration: 2000
+          })
+        } else {
+          wx.showToast({
+            title: '登录过期',
+            icon: 'success',
+            duration: 2000
+          })
+        }
+      }
+    })
+  },
+  //点击回复Ta
+  reply:function(e){
+    if (!app.globalData.islogin) {
+      //请先登录
+      return;
+    }
+    this.setData({
+      placeholder: '回复' + e.currentTarget.dataset.sendernickname,
+      iscomment:false,
+      receiverNickname: e.currentTarget.dataset.sendernickname,
+      receiverId: e.currentTarget.dataset.senderid,
+      commentId: e.currentTarget.dataset.commentid,
+      index: e.currentTarget.dataset.index
+    })
+  },
+  //
+  cancel:function(){
+    this.setData({
+      iscomment: true
+    })
+  },
+  //发表回复
+  sendReply:function(){
+    var that=this;
+    wx.request({
+      url: 'http://localhost:8080/article/insertReply',
+      method: 'GET',
+      header: {
+        token: wx.getStorageSync('token'),
+      },
+      data: {
+        //回复内容
+        replyContent: myComment,
+        //回复所属评论
+        commentId: that.data.commentId,
+        //回复的人id
+        receiverId: that.data.receiverId,
+        //回复的人nickname
+        receiverNickname: that.data.receiverNickname,
+        //回复类型
+        type: 1
+      },
+      fail: function () {
+        wx.showToast({
+          title: '出错了',
+          icon: 'success',
+          duration: 2000
+        })
+      },
+      success: function (res) {
+        //修改数组的值
+       /* 第一步：先用一个变量，把(info[0].gMoney)用字符串拼接起来。
+        　第二步：将变量写在[]里面即可。
+        */
+        if (res.data == true) {
+          let temp = 'commentList[' + that.data.index + '].replyNums'
+          //回复成功
+          wx.showToast({
+            title: '回复成功',
+            icon: 'success',
+            duration: 2000,
+          })
+          //该评论回复数加一
+          //that.data.commentList[that.data.index].replyNums = 
+          that.setData({
+            inputcontent: '',
+            iscomment:true,
+            [temp]: that.data.commentList[that.data.index].replyNums + 1
+          })
+        } else if (res.data == false) {
+          wx.showToast({
+            title: '回复失败',
+            icon: 'success',
+            duration: 2000
+          })
+        } else {
+          wx.showToast({
+            title: '登录过期',
+            icon: 'success',
+            duration: 2000
+          })
+        }
+      }
+    })
   }
 })

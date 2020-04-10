@@ -17,8 +17,7 @@ Page({
         zhName: '我的关注'
       }
     ],
-    skin: ''
-    
+    skin: 'https://img-1301061617.cos.ap-nanjing.myqcloud.com/skin/0.jpg'
   },
   onLoad: function() {
     this.setData({
@@ -59,13 +58,16 @@ Page({
              url: 'http://localhost:8080/user/wxLogin',
              method: 'POST',
              data:{
-               "code": res.code,
-               "nickname": userinfo.nickName,
-               "gender": userinfo.gender,
-               "province": userinfo.province,
-               "city":userinfo.city,
-               "avatarPath": userinfo.avatarUrl
+               code: res.code,
+               nickname: userinfo.nickName,
+               gender: userinfo.gender,
+               province:userinfo.province,
+               city:userinfo.city,
+               avatarPath: userinfo.avatarUrl
              },
+           header: {
+             'content-type': 'application/x-www-form-urlencoded'
+           },
            success(res) {
              //登录成功，将全局islogin设为true
              app.globalData.islogin=true;
@@ -80,7 +82,8 @@ Page({
                userInfo:res.data
              })
              //开启websocket连接     
-
+              //获取动态数量
+             app.load_action_size();
            }
          });
       }
@@ -108,8 +111,6 @@ Page({
       var that = this;
       // 获取到用户的信息了，打印到控制台上看下
       this.data.userInfo = e.detail.userInfo;
-      console.log("用户的信息如下：");
-      console.log(this.data.userInfo);
       this.login();
     } else {
       //用户按了拒绝按钮

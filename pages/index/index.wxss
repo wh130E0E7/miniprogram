@@ -42,6 +42,7 @@
   right: 20rpx;
   border-radius: 15px;
 }
+
 .notices image {
   width: 80rpx;
   height: 80rpx;
