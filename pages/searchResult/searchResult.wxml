@@ -1,0 +1,28 @@
+<!-- 搜索栏 -->
+<view>
+  <view class="weui-search-bar">
+    <view class="weui-search-bar__form">
+      <!-- 搜索框 -->
+      <view class="weui-search-bar__box">
+        <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+        <input type="text" class="weui-search-bar__input" bindinput="bindkeyWordInput" placeholder="请输入搜索内容" value='{{keyword}}' />
+      </view>
+    </view>
+    <!-- 搜索按钮,调用搜索查询方法 -->
+    <view class="weui-search-bar__cancel-btn" bindtap='search'>搜索</view>
+  </view>
+  <view wx:if="{{totalnums>0}}">
+    <view>共有{{totalnums}}篇文章</view>
+    <view>
+      <scroll-view refresher-enabled bindscrolltolower="loadMore" style="height:86vh" scroll-y>
+        <list articleList="{{searchResList}}"></list>
+        <view style="text-align: center;margin: 10px;">
+          <view wx:if="{{loading}}">加载中...</view>
+          <view wx:if="{{noMore}}">没有更多了</view>
+          <view wx:if="{{loadingFailed}}">数据加载失败,请重试</view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+  <view wx:else></view>
+</view>

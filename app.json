@@ -1,21 +1,20 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/search/search",
+
+    "pages/searchResult/searchResult",
+    "pages/notices/notices",
     "pages/detail/detail",
     "pages/replyList/replyList",
-   
-    
     "pages/mine/mine",
-
     "pages/editor/editor",
     "pages/skin/skin",
-    "pages/notices/notices",
     "pages/history/history",
     "pages/favorite/favorite",
     "pages/follow/follow",
-    "pages/search/search",
-    "pages/articles/articles",
-    "pages/actions/actions"
+    "pages/actions/actions",
+    "pages/works/works"
   ],
   "window": {
     "backgroundTextStyle": "dark",

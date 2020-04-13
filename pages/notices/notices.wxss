@@ -3,8 +3,8 @@
   width: 100%;
   border-bottom: 2rpx solid #ccc;
   text-align: center;
-  height: 88rpx;
-  line-height: 88rpx;
+  height: 6vh;
+  line-height: 6vh;
   display: flex;
   flex-flow: row;
   justify-content: space-between;
@@ -20,3 +20,76 @@
 swiper{
 text-align: center;
 }
+.allread{
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  text-align:left;
+  font-size: 35rpx;
+  color: red;
+  border-bottom: 2rpx solid #ccc;
+}
+.item{
+  width: 100%;
+  margin-top: 10rpx;
+  display: flex;
+  border-bottom: 2rpx solid #ccc;
+}
+.avatararea{
+ width: 10vw;
+}
+.avatar {
+  height: 60rpx;
+  width: 60rpx;
+  border-radius: 30rpx;
+}
+.content{
+   width: 80vw;
+  margin-left: 20rpx;
+}
+.message{
+  text-align:left;
+ height: 60rpx;
+    color: rgb(134, 133, 133);
+}
+.nickname{
+  font-size: 35rpx;
+  color:rgb(176, 176, 221);
+}
+.title{
+  width: 100%;
+  text-align:left;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  background-color: whitesmoke;
+}
+.publishTime{
+  height: 40rpx;
+  font-size: 30rpx;
+  text-align:left;
+  padding-top: 10rpx;
+  color: rgb(111, 121, 119);
+}
+.follow_item{
+  display: flex;
+}
+.follow_avatar {
+  margin-left: 20rpx;
+  height: 60rpx;
+  width: 60rpx;
+  border-radius: 30rpx;
+}
+.follow_nickname{
+   margin-left: 20rpx;
+   color: rgb(134, 133, 133);
+}
+.follow{
+    margin-left: 200rpx;
+    border: 2rpx solid #ccc;
+    color: red;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 50rpx;  /** 垂直居中 **/ 
+    text-align: center;   /** 水平居中 **/ 
+    border-radius: 10rpx;
+  }

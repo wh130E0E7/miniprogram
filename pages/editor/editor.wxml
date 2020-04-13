@@ -40,10 +40,13 @@
                 <!-- 再选择了文字和图片后，显示编辑窗口 -->
                 <block wx:if="{{ item.type }}">
                   <block wx:if="{{ item.type=='text' }}">
-                    <textarea maxlength="-1" class="u-textarea" name="field[{{item.index}}]" bindinput="bindContentInput" data-index="{{index}}" value="{{ item.value }}" placeholder="请输入..."></textarea>
+                    <textarea maxlength="-1" class="u-textarea" name="field[{{item.index}}]"
+                      bindinput="bindContentInput" data-index="{{index}}" value="{{ item.value }}"
+                      placeholder="请输入..."></textarea>
                   </block>
                   <block wx:if="{{ item.type=='image' }}">
-                    <input type="text" name="field[{{item.index}}]" value="{{item.value}}" style="display: none;" readonly="readonly" />
+                    <input type="text" name="field[{{item.index}}]" value="{{item.value}}" style="display: none;"
+                      readonly="readonly" />
                     <image src="{{item.value}}" class="u-image"></image>
                   </block>
                 </block>
@@ -51,10 +54,12 @@
                 <block wx:else>
                   <view class="flex padding">
                     <view class="flex__item block__item-type">
-                      <view class="block__item-type-text" bindtap="bingTypeSelect" data-type='text' data-index="{{index}}"></view>
+                      <view class="block__item-type-text" bindtap="bingTypeSelect" data-type='text'
+                        data-index="{{index}}"></view>
                     </view>
                     <view class="flex__item">
-                      <view class="block__item-type-image" bindtap="bingTypeSelect" data-type='image' data-index="{{index}}"></view>
+                      <view class="block__item-type-image" bindtap="bingTypeSelect" data-type='image'
+                        data-index="{{index}}"></view>
                     </view>
                   </view>
                 </block>

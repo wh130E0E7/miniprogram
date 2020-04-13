@@ -1,20 +1,20 @@
 // pages/replyList/replyList.js
-var commentId=''
-var commentSenderId=''
-var senderNickname=''
-var myReply=''
+var commentId = ''
+var commentSenderId = ''
+var senderNickname = ''
+var myReply = ''
 var app = getApp();
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-   comment:{},
-   replyList:[],
-   placeholder:'说些什么吧',
-   type:1,
-    receiverId:'',
-    receiverNickname:'',
+    comment: {},
+    replyList: [],
+    placeholder: '说些什么吧',
+    type: 1,
+    receiverId: '',
+    receiverNickname: '',
   },
   /**
    * 生命周期函数--监听页面加载
@@ -24,13 +24,13 @@ Page({
     commentSenderId = options.senderid
     senderNickname = options.senderNickname
     this.setData({
-      comment:options,
+      comment: options,
       receiverNickname: senderNickname,
       receiverId: commentSenderId,
     });
     this.getReplyList();
   },
-  getReplyList:function(){
+  getReplyList: function () {
     var that = this;
     //获取回复列表，回复共有俩种形式，一种直接回复评论，一种回复别人回复
     wx.request({
@@ -46,7 +46,7 @@ Page({
       }
     })
   },
-  reply:function(e){
+  reply: function (e) {
     console.log(e);
     //回复回复的情况
     if (!app.globalData.islogin) {
@@ -56,12 +56,12 @@ Page({
     }
     this.setData({
       placeholder: '回复' + e.currentTarget.dataset.sendernickname,
-      type:2,
+      type: 2,
       receiverNickname: e.currentTarget.dataset.sendernickname,
       receiverId: e.currentTarget.dataset.senderid,
     })
   },
-  cancel:function(){
+  cancel: function () {
     this.setData({
       placeholder: '说些什么吧',
       type: 1,
@@ -72,7 +72,7 @@ Page({
   onTextChanged: function (e) {
     myReply = e.detail.value
   },
-//发表回复
+  //发表回复
   sendReply: function () {
     var that = this;
     wx.request({
@@ -136,5 +136,5 @@ Page({
     })
   }
 
- 
+
 })

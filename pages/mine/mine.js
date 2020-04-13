@@ -4,7 +4,12 @@ Page({
     //判断小程序的API，回调，参数，组件等是否在当前版本可用。
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     userInfo: '',
-    gridList: [{
+    gridList: [
+      {
+        enName: 'works',
+        zhName: '我的文章'
+      },
+      {
         enName: 'favorite',
         zhName: '我的收藏'
       },
@@ -13,7 +18,7 @@ Page({
         zhName: '浏览记录'
       },
       {
-        enName: 'shake',
+        enName: 'follow',
         zhName: '我的关注'
       }
     ],
@@ -21,12 +26,22 @@ Page({
   },
   onLoad: function() {
     this.setData({
-      islogin: app.globalData.islogin,
+     // islogin: app.globalData.islogin,
       userInfo:app.globalData.userInfo
     })
   },
   onShow: function() {
-    this.islogin=app.globalData.islogin;
+    this.setData({
+      islogin: app.globalData.islogin,
+    })
+    //如果已登录但是没有用户信息
+    //（防止在加载过程中直接点击我的界面，此时app.globalData.userInfo没有信息却直接给此页面赋值）
+    if (this.data.islogin&&this.data.userInfo==null){
+      this.setData({
+        // islogin: app.globalData.islogin,
+        userInfo: app.globalData.userInfo
+      })
+    }
     var that = this;
     wx.getStorage({
       key: 'skin',
@@ -55,7 +70,7 @@ Page({
         //每次登录后自动发起websocket连接，带上登录态
          wx.request({
              // 自行补上自己的 APPID 和 SECRET
-             url: 'http://localhost:8080/user/wxLogin',
+             url: app.globalData.host+'/user/wxLogin',
              method: 'POST',
              data:{
                code: res.code,
@@ -81,7 +96,8 @@ Page({
                //将data赋值给userinfo
                userInfo:res.data
              })
-             //开启websocket连接     
+             //开启websocket连接    
+             app.openSocket();
               //获取动态数量
              app.load_action_size();
            }

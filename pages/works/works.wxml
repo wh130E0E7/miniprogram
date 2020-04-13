@@ -1,4 +1,4 @@
-<view wx:if="{{islogin}}" style="height:100vh">
+<view style="height:100vh">
 <scroll-view refresher-enabled bindscrolltolower="loadMore" style="height:100%" scroll-y>
   <list articleList="{{articleList}}"></list>
   <view style="text-align: center;margin: 10px;">
@@ -8,4 +8,3 @@
   </view>
 </scroll-view>
 </view>
-<view wx:else>请先登录</view>

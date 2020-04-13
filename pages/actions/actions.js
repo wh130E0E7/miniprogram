@@ -1,5 +1,9 @@
 // pages/actions/actions.js
-var token = ''
+/*
+在Page外部声明var变量时，当用户退出该页面时，只要该页面还驻留在内存中未被销毁，则当再次加载此页面时，变量的值不会改变。
+*/
+var app=getApp()
+var token=''
 Page({
   /**
    * 页面的初始数据
@@ -11,12 +15,31 @@ Page({
     currentpage: 1,
     articleList: [],
     totlapages: null,
-    flag: true
+    flag: true,
+    islogin:false,
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    token=wx.getStorageSync('token'),
+    this.setData({
+      islogin: app.globalData.islogin
+    })
+    if (app.globalData.islogin){
+      this.loadContent();
+    }
+  },
+  onshow:function(){
+    this.setData({
+      islogin: app.globalData.islogin
+    })
+    //登录了还是没有文章
+    if (articleList.length = 0 && app.globalData.islogin){
+      this.loadContent();
+    }
+  },
+  loadContent:function(){
     wx.showLoading({
       title: '加载中',
     })
@@ -25,10 +48,9 @@ Page({
       index: 1
     })
     //加载内容
-    token = wx.getStorageSync('token');
     var that = this;
     wx.request({
-      url: 'http://localhost:8080/user/getActionList',
+      url: app.globalData.host+'/user/getActionList',
       data: {
         page: that.data.currentpage
       },
@@ -62,7 +84,7 @@ Page({
       loading: true
     })
     wx.request({
-      url: 'http://localhost:8080/user/getActionList',
+      url: app.globalData.host +'/user/getActionList',
       data: {
         page: that.data.currentpage + 1
       },

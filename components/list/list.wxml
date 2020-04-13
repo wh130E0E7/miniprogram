@@ -4,21 +4,18 @@
     <text class="nickname">{{item.author.nickname}}</text>
   </view>
   <navigator url="../detail/detail?articleId={{item.articleId}}">
-    <view class="common">
-      <text class="title">{{item.title}}</text>
-    </view>
-    <view class="common content">
-      {{item.summary}}
+    <view class="contentAndimg">
+      <view>
+        <view class="common">
+          <text class="title">{{item.title}}</text>
+        </view>
+        <view class="common content">
+          {{item.summary}}
+        </view>
+      </view>
+      <view class="imgIncontent" wx:if="{{item.containImgpath.length>0}}">
+        <image class="containImg" src="{{item.containImgpath}}"></image>
+      </view>
     </view>
   </navigator>
-  <view class="common">
-    <view class="comment">
-      <image class="icon" src="../../icons/comment.png"></image>
-      <view class="commentnums">{{item.commentNums}}</view>
-    </view>
-    <view class="comment">
-      <image class="icon" src="../../icons/recommender.png"></image>
-      <view class="commentnums">{{item.likeNums}}</view>
-    </view>
-  </view>
 </view>

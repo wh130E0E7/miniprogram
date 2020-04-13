@@ -1,14 +1,14 @@
 var config = require('../../utils/config')
 Page({
-  data:{
+  data: {
     skinList: config.skinList,
     nowSkin: ''
   },
-  onLoad:function(options){
+  onLoad: function (options) {
     var that = this
     wx.getStorage({
       key: 'skin',
-      success: function(res){
+      success: function (res) {
         if (res.data == "") {
           that.setData({
             nowSkin: config.skinList[0].imgUrl
@@ -21,15 +21,15 @@ Page({
       }
     })
   },
-  chooseSkin: function(e) {
+  chooseSkin: function (e) {
     var url = e.currentTarget.dataset.url
     wx.setStorage({
       key: 'skin',
       data: url,
-      success: function(res){
+      success: function (res) {
         wx.navigateBack({
           delta: 1,
-          success: function(res){
+          success: function (res) {
             console.log('success')
           }
         })

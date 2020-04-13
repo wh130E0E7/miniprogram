@@ -1,5 +1,26 @@
 /* pages/detail/detail.wxss */
-
+/* 当 display: flex 配合 justify-content: center 使用时可以让view水平居中
+而配合 align-items: center 用时可以实现垂直居中效果 */
+.searcharea{
+    height: 6vh;
+  display: flex;
+  justify-content: center;
+}
+.search{
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  width: 95vw;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  border-radius: 10rpx;
+  background-color: whitesmoke;
+}
+.searchtext{
+  margin-left: 10rpx;
+  font-size: 30rpx;
+  color: rgb(170, 162, 162);
+}
 .swiper-tab {
   width: 100%;
   border-bottom: 2rpx solid #ccc;
@@ -20,12 +41,20 @@
   color: #f65959;
   border-bottom: 4rpx solid #f65959;
 }
-
+.redpoint{
+  background-color: red;
+  z-index: 1;
+  height: 20rpx;
+  width: 20rpx;
+  border-radius: 10rpx;
+  position: fixed;
+  top: 95rpx;
+  right: 35rpx;
+}
 .addArticle {
   position: fixed;
   bottom: 5px;
   right: 45vw;
-  display: flex;
   justify-content: center;
 }
 
@@ -38,7 +67,6 @@
 .notices {
   position: fixed;
   top: 80rpx;
-  display: flex;
   right: 20rpx;
   border-radius: 15px;
 }

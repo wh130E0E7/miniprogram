@@ -37,7 +37,8 @@
   </view>
   <view>
     <!--收藏，根据js中的isfavorite判断加载哪张图片-->
-    <image class="favorite" src="{{isfavorite?'../../icons/favorite_selected.png':'../../icons/favorite.png'}}" bindtap="favorite"></image>
+    <image class="favorite" src="{{isfavorite?'../../icons/favorite_selected.png':'../../icons/favorite.png'}}"
+      bindtap="favorite"></image>
   </view>
 </view>
 
@@ -55,10 +56,13 @@
         <view class="commentContent">{{item.commentContent}}</view>
         <view class="publishTime_reply">
           <view class="commentPublishTime">{{item.publishTime}}</view>
-          <view class="reply" bindtap="reply" data-sendernickname="{{item.senderNickname}}" data-commentid="{{item.commentId}}" data-index="{{index}}" data-senderid="{{item.userId}}">回复Ta</view>
+          <view class="reply" bindtap="reply" data-sendernickname="{{item.senderNickname}}"
+            data-commentid="{{item.commentId}}" data-index="{{index}}" data-senderid="{{item.userId}}">回复Ta</view>
         </view>
         <view class="navigator" wx:if="{{item.replyNums>0}}">
-          <navigator url="../replyList/replyList?commentId={{item.commentId}}&senderAvatarPath={{item.senderAvatarPath}}&senderNickname={{item.senderNickname}}&commentContent={{item.commentContent}}&publishTime={{item.publishTime}}&senderid={{item.userId}}">查看全部回复({{item.replyNums}})</navigator>
+          <navigator
+            url="../replyList/replyList?commentId={{item.commentId}}&senderAvatarPath={{item.senderAvatarPath}}&senderNickname={{item.senderNickname}}&commentContent={{item.commentContent}}&publishTime={{item.publishTime}}&senderid={{item.userId}}">
+            查看全部回复({{item.replyNums}})</navigator>
         </view>
       </view>
     </view>
@@ -70,12 +74,13 @@
 </view>
 <!--评论框-->
 <view class="commentBar" wx:if="{{iscomment}}">
-  <input class="commentInput" bindinput="onTextChanged" placeholder="发表你的评论吧" value='{{inputcontent}}' />
+  <input class="commentInput" bindinput="onTextChanged" placeholder="发表你的评论吧" value='{{keyword}}' />
   <text class="sendButton" bindtap="sendComment">发表</text>
 </view>
 <!--回复框-->
 <view class="replyBar" wx:else>
-  <input class="replyInput" focus="{{focus}}" bindinput="onTextChanged" placeholder="{{placeholder}}" value='{{inputcontent}}' />
+  <input class="replyInput" focus="{{focus}}" bindinput="onTextChanged" placeholder="{{placeholder}}"
+    value='{{inputcontent}}' />
   <text class="replycancelButton" bindtap="cancel">取消</text>
   <text class="replysendButton" bindtap="sendReply">发表</text>
 </view>

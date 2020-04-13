@@ -1,2 +1,45 @@
 <!--pages/search/search.wxml-->
-<text>pages/search/search.wxml</text>
+<view>
+  <!-- 搜索栏 -->
+  <view class="weui-search-bar">
+    <view class="weui-search-bar__form">
+      <!-- 搜索框 -->
+      <view class="weui-search-bar__box">
+        <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+        <input type="text" class="weui-search-bar__input" bindinput="bindkeyWordInput" placeholder="请输入搜索内容" value='{{keyword}}' />
+      </view>
+    </view>
+    <!-- 搜索按钮,调用搜索查询方法 -->
+    <view class="weui-search-bar__cancel-btn" bindtap='search'>搜索</view>
+  </view>
+  <scroll-view refresher-enabled style="height:90vh" scroll-y>
+    <!-- 热门搜索区域 -->
+    <view>
+      <view>热门搜索</view>
+      <!-- 热门搜索的标签（十个） -->
+      <view class="hottagarea">
+        <!-- 遍历最热标签 -->
+        <view class='hot_keyword_item' wx:for='{{hotlist}}' data-index='{{index}}' data-keyword="{{item}}" bindtap="hotnav">
+        {{item}}
+        </view>
+      </view>
+    </view>
+    <!-- 搜索历史区域 -->
+    <view wx:if="{{historylist.length>0}}">
+      <view class="historymessage">
+        <view class="left">历史记录</view>
+        <view class="right" bindtap="clearAllHistory">全部清除</view>
+      </view>
+      <!-- 遍历历史记录 -->
+      <view class="historytag" wx:for='{{historylist}}' data-index='{{index}}'>
+        <navigator class="left historycontent" url="../searchResult/searchResult?keyword={{item}}">
+          <icon class="searchcion" size='20' type='search'></icon>
+          <text class="x">{{item}}</text>
+        </navigator>
+        <view class="right" bindtap="clearHistoryByIndex" data-i="{{index}}">
+          <icon class="searchcion" size='20' type='clear'></icon>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

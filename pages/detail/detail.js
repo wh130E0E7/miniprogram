@@ -36,13 +36,12 @@ Page({
     this.loadArticle();
     
     wx.request({
-      url: 'http://localhost:8080/article/selectArticleByIdForLoginUser',
+      url: app.globalData.host +'/article/selectArticleByIdForLoginUser',
       data:{
         articleId:articleId
       },
       header:{
         token: token,
-        'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
     //加载评论'
@@ -52,14 +51,11 @@ Page({
   loadArticle:function(){
     var that = this
     wx.request({
-      url: 'http://localhost:8080/article/selectArticleById',
+      url: app.globalData.host +'/article/selectArticleById',
       method: 'GET',
       data: {
         //文章id由列表栏传递过来
         articleId: articleId
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
         var _content = res.data.article.content;
@@ -82,7 +78,7 @@ Page({
       var that = this;
       //判断是否关注了该作者
       wx.request({
-        url: 'http://localhost:8080/article/isFollow',
+        url: app.globalData.host +'/article/isFollow',
         method: 'GET',
         data: {
           //作者id
@@ -102,7 +98,7 @@ Page({
       })
       //判断该文章是否点赞了
       wx.request({
-        url: 'http://localhost:8080/article/isLike',
+        url: app.globalData.host +'/article/isLike',
         method: 'GET',
         data: {
           articleId: articleId
@@ -123,7 +119,7 @@ Page({
       })
       //判断该文章是否收藏了
       wx.request({
-        url: 'http://localhost:8080/article/isFavorite',
+        url: app.globalData.host +'/article/isFavorite',
         method: 'GET',
         data: {
           articleId: articleId
@@ -152,7 +148,7 @@ Page({
     } else {
     //关注，取消关注（需要判断是否登录失效）
       wx.request({
-        url: 'http://localhost:8080/article/follow',
+        url: app.globalData.host +'/article/follow',
         data:{
           authorId:authorId
         },
@@ -183,7 +179,7 @@ Page({
     }else{
        //点赞，取消点赞（需要判断是否登录失效）
       wx.request({
-        url: 'http://localhost:8080/article/like',
+        url: app.globalData.host +'/article/like',
         data:{
           authorId:authorId,
           articleId:articleId,
@@ -215,7 +211,7 @@ Page({
       //提示登录
     } else {
       wx.request({
-        url: 'http://localhost:8080/article/favorite',
+        url: app.globalData.host +'/article/favorite',
         data: {
           articleId: articleId,
         },
@@ -242,7 +238,7 @@ Page({
     var that = this
     //请求评论
     wx.request({
-      url: 'http://localhost:8080/article/getCommentList',
+        url: app.globalData.host +'/article/getCommentList',
         method: 'GET',
         data : {
           articleId: articleId
@@ -267,7 +263,7 @@ Page({
     var that = this
     //发送评论评论 该功能无法使用，仅作保留
     wx.request({
-      url: 'http://localhost:8080/article/insertComment',
+      url: app.globalData.host +'/article/insertComment',
       method: 'GET',
       header: {
         token: token
@@ -334,7 +330,7 @@ Page({
   sendReply:function(){
     var that=this;
     wx.request({
-      url: 'http://localhost:8080/article/insertReply',
+      url: app.globalData.host +'/article/insertReply',
       method: 'GET',
       header: {
         token: wx.getStorageSync('token'),

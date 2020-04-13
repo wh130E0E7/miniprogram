@@ -29,6 +29,7 @@
     padding-right: 10px;
     line-height: 50rpx;  /** 垂直居中 **/ 
     text-align: center;   /** 水平居中 **/ 
+    border-radius: 10rpx;
   }
 .unfollow{
     margin-left: 300rpx;
@@ -39,6 +40,7 @@
     padding-right: 5px;
     line-height: 50rpx;  /** 垂直居中 **/ 
     text-align: center;   /** 水平居中 **/ 
+      border-radius: 10rpx;
 }
 .date{
     font-size: 15px;

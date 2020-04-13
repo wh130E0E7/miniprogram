@@ -1,50 +1,52 @@
 <view>
-<view class="commentContainer">
-  <!--评论-->
-  <view class="comment">
-    <view class="commentImg">
-      <image class="avatar" src="{{comment.senderAvatarPath}}"></image>
-    </view>
-    <view class="commentDetail">
-      <view class="commnenterNickname">{{comment.senderNickname}}</view>
-      <view class="commentContent">{{comment.commentContent}}</view>
-      <view class="publishTime_reply">
-        <view class="commentPublishTime">{{comment.publishTime}}</view>
+  <view class="commentContainer">
+    <!--评论-->
+    <view class="comment">
+      <view class="commentImg">
+        <image class="avatar" src="{{comment.senderAvatarPath}}"></image>
+      </view>
+      <view class="commentDetail">
+        <view class="commnenterNickname">{{comment.senderNickname}}</view>
+        <view class="commentContent">{{comment.commentContent}}</view>
+        <view class="publishTime_reply">
+          <view class="commentPublishTime">{{comment.publishTime}}</view>
+        </view>
       </view>
     </view>
-  </view>
   </view>
   <!--回复列表-->
   <view class="replyList">
-  <view class="replyNums">{{replyList.length}}条回复</view>
-  <view class="comment" wx:for="{{replyList}}">
-    <!--只显示回复数，点击之后才显示所有回复-->
-    <view class="commentImg">
-      <image class="avatar" src="{{item.senderAvatarPath}}"></image>
-    </view>
-    <view class="commentDetail">
-      <view class="commnenterNickname">{{item.senderNickname}}</view>
-      <!--俩种情况-->
-      <!--直接回复评论-->
-      <view class="commentContent" wx:if="{{item.type==1}}">{{item.replyContent}}</view>
-      <!--回复别人的回复-->
-       <view class="commentContent" wx:else>
-       回复
-       <text>@{{item.receiverNickname}}:</text>
-       {{item.replyContent}}
-       </view>
-      <view class="publishTime_reply">
-        <view class="commentPublishTime">{{item.publishTime}}</view>
-        <view class="reply" bindtap="reply" data-sendernickname="{{item.senderNickname}}" data-senderid="{{item.senderId}}">回复Ta</view>
+    <view class="replyNums">{{replyList.length}}条回复</view>
+    <view class="comment" wx:for="{{replyList}}">
+      <!--只显示回复数，点击之后才显示所有回复-->
+      <view class="commentImg">
+        <image class="avatar" src="{{item.senderAvatarPath}}"></image>
+      </view>
+      <view class="commentDetail">
+        <view class="commnenterNickname">{{item.senderNickname}}</view>
+        <!--俩种情况-->
+        <!--直接回复评论-->
+        <view class="commentContent" wx:if="{{item.type==1}}">{{item.replyContent}}</view>
+        <!--回复别人的回复-->
+        <view class="commentContent" wx:else>
+          回复
+          <text>@{{item.receiverNickname}}:</text>
+          {{item.replyContent}}
+        </view>
+        <view class="publishTime_reply">
+          <view class="commentPublishTime">{{item.publishTime}}</view>
+          <view class="reply" bindtap="reply" data-sendernickname="{{item.senderNickname}}"
+            data-senderid="{{item.senderId}}">回复Ta</view>
+        </view>
       </view>
     </view>
   </view>
-  </view>
   <!--编辑位置-->
   <!--回复框-->
-<view class="replyBar">
-  <input class="replyInput" focus="{{focus}}" bindinput="onTextChanged" placeholder="{{placeholder}}" value='{{inputcontent}}' />
-  <text class="replycancelButton" bindtap="cancel">取消</text>
-  <text class="replysendButton" bindtap="sendReply">发表</text>
-</view>
+  <view class="replyBar">
+    <input class="replyInput" focus="{{focus}}" bindinput="onTextChanged" placeholder="{{placeholder}}"
+      value='{{inputcontent}}' />
+    <text class="replycancelButton" bindtap="cancel">取消</text>
+    <text class="replysendButton" bindtap="sendReply">发表</text>
+  </view>
 </view>

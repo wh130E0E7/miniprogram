@@ -1,1 +1,27 @@
 /* pages/fellow/fellow.wxss */
+.item{
+display: flex;
+margin-top: 10rpx;
+padding-bottom: 10rpx;
+border-bottom: 2rpx solid #ccc;
+}
+.avatar{
+    height:70rpx;
+    width: 70rpx;
+    border-radius: 35rpx;
+}
+.nickname{
+   margin-left: 20rpx;
+   margin-top: 10rpx;
+}
+.follow{
+    height: 50rpx;
+     margin-left: 300rpx;
+    border: 2rpx solid #ccc;
+    color: rgb(17, 16, 16);
+    background-color: white;
+    padding: 10rpx;
+    line-height: 50rpx;  /** 垂直居中 **/ 
+    text-align: center;   /** 水平居中 **/ 
+    border-radius: 10rpx;
+  }

@@ -5,23 +5,62 @@
   <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">关注</view>
 </view>
 
-<swiper style="height:{{height}}px " current="{{currentTab}}" duration="300"  bindchange="swiperTab">
+<swiper style="height:94vh" current="{{currentTab}}" duration="300"  bindchange="swiperTab">
   <swiper-item>
-   <scroll-view refresher-enabled  style="height:100%" scroll-y>
-          <view wx:for="1234567777777" wx:key="unique">
-          <view>某某点赞了你的某某文章</view>
+      <!-- 点赞通知 -->
+      <view class="allread">全部已读</view>
+      <scroll-view refresher-enabled bindscrolltolower="loadMoreLikeMessage" style="height:100%" scroll-y>
+        <view class="item" wx:for="{{likeMessageList}}" wx:key="unique">
+          <!-- 头像区域 -->
+          <view class="avatararea">
+            <image class="avatar" src="{{item.senderAvatarPath}}"></image>
           </view>
-  </scroll-view>
-</swiper-item>
+          <!-- 内容区域 -->
+          <view class="content">
+            <!-- 提示信息 -->
+            <view class="message"><text class="nickname">@{{item.senderNickname}}</text> 点赞了你的文章</view>
+            <!-- 文章标题,点击可以进入文章详情页 -->
+            <navigator url="../detail/detail?articleId={{item.articleId}}">
+            <view class="title">{{item.title}}</view>
+            </navigator>
+            <!-- 时间 -->
+            <view class="publishTime">{{item.publishTime}}</view>
+          </view>
+        </view>
+      </scroll-view>
+  </swiper-item> 
   <swiper-item>  
-  <scroll-view style="height:100%" scroll-y>
-          <view wx:for="1234567777777" wx:key="unique"> 
-          <view>某某评论了你的某某文章</view>
+     <!-- 评论通知 -->
+     <view class="allread">全部已读</view>
+     <scroll-view refresher-enabled bindscrolltolower="loadMoreCommentMessage" style="height:100%" scroll-y>
+      <view class="item" wx:for="{{commentMessageList}}" wx:key="unique">
+          <!-- 头像区域 -->
+          <view class="avatararea">
+            <image class="avatar" src="{{item.senderAvatarPath}}"></image>
           </view>
-  </scroll-view></swiper-item>
-  <swiper-item>  <scroll-view style="height:100%" scroll-y>
-          <view wx:for="1234567777777" wx:key="unique">
-          <view>某某关注了你</view>
+          <!-- 内容区域 -->
+          <view class="content">
+            <!-- 提示信息 -->
+            <view class="message"><text class="nickname">@{{item.senderNickname}}</text> 评论了你的文章</view>
+            <!-- 文章标题,点击可以进入文章详情页 -->
+            <navigator url="../detail/detail?articleId={{item.articleId}}">
+            <view class="title">{{item.title}}</view>
+            </navigator>
+            <!-- 时间 -->
+            <view class="publishTime">{{item.publishTime}}</view>
           </view>
-  </scroll-view></swiper-item>
+        </view>
+     </scroll-view>
+  </swiper-item>
+  <swiper-item> 
+      <!-- 关注通知 -->
+       <view class="allread">全部已读</view>
+      <scroll-view refresher-enabled bindscrolltolower="loadMoreFollowMessage" style="height:100%" scroll-y>
+      <view class="follow_item" wx:for="{{followMessageList}}" wx:key="unique">
+        <image class="follow_avatar" src="{{item.senderAvatarPath}}"></image>
+        <view class="follow_nickname"><text class="nickname">@{{item.senderNickname}}</text>关注了你</view>
+        <view class="follow" daset-userId="{{item.senderId}}" bindtap="unfollow">关注</view>
+      </view>
+     </scroll-view>
+</swiper-item>
 </swiper>

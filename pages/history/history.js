@@ -1,18 +1,18 @@
 // pages/history/history.js
-var token=''
+var token = ''
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  loading: false,
-  noMore: false,
-  loadingFailed: false,
-  currentpage:1,
-  articleList:[],
-  totlapages:null,
-  flag:true
+    loading: false,
+    noMore: false,
+    loadingFailed: false,
+    currentpage: 1,
+    articleList: [],
+    totalpages: null,
+    flag: true
   },
 
   /**
@@ -29,19 +29,19 @@ Page({
       data: {
         page: that.data.currentpage
       },
-      header:{
+      header: {
         token: token
       },
       success: function (res) {
         wx.hideLoading()
         that.setData({
           articleList: res.data.rows,
-          totlapages: res.data.totalPages
+          totalpages: res.data.totalPages
         })
       }
     })
   },
-  loadMore:function(){
+  loadMore: function () {
     if (!this.data.flag) {
       return
     }
@@ -49,7 +49,7 @@ Page({
     that.setData({
       flag: false
     })
-    if (this.data.currentpage == this.data.totlapages) {
+    if (this.data.currentpage == this.data.totalpages) {
       this.setData({
         noMore: true
       })
@@ -63,7 +63,7 @@ Page({
       data: {
         page: that.data.currentpage + 1
       },
-      header:{
+      header: {
         token: token
       },
       success: function (res) {
@@ -71,7 +71,7 @@ Page({
           flag: true,
           loading: false,
           artlcleList: that.data.articleList.concat(res.data.rows),
-          totlapages: res.data.totalPages,
+          totalpages: res.data.totalPages,
           currentpage: that.data.currentpage + 1
         })
       }

@@ -1,18 +1,31 @@
 // pages/fellow/fellow.js
+var token = ''
+var app=getApp()
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-
+    userList: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that = this;
+    token = wx.getStorageSync('token');
+    wx.request({
+      url: app.globalData.host + '/user/getFollowList',
+      header: {
+        token: token
+      },
+      success: function (res) {
+        that.setData({
+          userList: res.data
+        })
+      }
+    })
   },
 
   /**

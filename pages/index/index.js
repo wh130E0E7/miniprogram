@@ -3,17 +3,19 @@ import util from "../../utils/util.js";
 var app = getApp()
 Page({
   data: {
+    //消息数量
+    newMessageNums:0,
     hotlist: [], //最热文章列表
     hot_currentpage: 1, //最热文章当前页
-    hot_totlapages:null,
+    hot_totalpages:null,
     hot_flag:true,
     newlist: [],
     new_flag: true,
     new_currentpage: 1,
-    new_totlapages: null,
+    new_totalpages: null,
     recommander: [],
     recommand_currentpage: 1,
-    recommand_totlapages: null,
+    recommand_totalpages: null,
     new_loading:false,
     new_noMore:false,
     new_loadingFailed:false,
@@ -31,7 +33,7 @@ Page({
       hot_flag: false
     })
     
-    if (this.data.hot_currentpage == this.data.hot_totlapages) {
+    if (this.data.hot_currentpage == this.data.hot_totalpages) {
       this.setData({
         hot_noMore: true
       })
@@ -42,7 +44,7 @@ Page({
       })
     }
     wx.request({
-      url: 'http://localhost:8080/article/getTopNList',
+      url: app.globalData.host +'/article/getTopNList',
       data: {
         page: that.data.hot_currentpage + 1
       },
@@ -51,7 +53,7 @@ Page({
           hot_flag:true,
           hot_loading: false,
           hotlist: that.data.hotlist.concat(res.data.rows),
-          hot_totlapages: res.data.totalPages,
+          hot_totalpages: res.data.totalPages,
           hot_currentpage: that.data.hot_currentpage + 1
         })
       }
@@ -65,7 +67,7 @@ Page({
     that.setData({
       new_flag: false
     })
-    if (this.data.new_currentpage == this.data.new_totlapages) {
+    if (this.data.new_currentpage == this.data.new_totalpages) {
       this.setData({
         new_noMore: true
       })
@@ -75,7 +77,7 @@ Page({
       new_loading: true
     })
     wx.request({
-      url: 'http://localhost:8080/article/getNewNList',
+      url: app.globalData.host +'/article/getNewNList',
       data: {
         page: that.data.new_currentpage + 1
       },
@@ -84,13 +86,24 @@ Page({
           new_flag: true,
           new_loading: false,
           newlist: that.data.newlist.concat(res.data.rows),
-          new_totlapages: res.data.totalPages,
+          new_totalpages: res.data.totalPages,
           new_currentpage: that.data.new_currentpage + 1
         })
       }
     })
   },
   onLoad: function(options) {
+    //初始化新消息数量
+    var that = this;
+    that.setData({
+      newMessageNums: app.globalData.newMessageNums
+    })
+    //每隔十秒获取新消息数量
+    setInterval(function () {
+      that.setData({
+        newMessageNums: app.globalData.newMessageNums
+      })
+    }, 5000);
     // 页面初始化 options为页面跳转所带来的参数
     this.loadTopN();
     this.loadNewN();
@@ -99,14 +112,14 @@ Page({
   loadTopN:function(){
     var that=this;
     wx.request({
-      url: 'http://localhost:8080/article/getTopNList',
+      url: app.globalData.host +'/article/getTopNList',
       data:{
         page: that.data.hot_currentpage
       },
       success:function(res){
         that.setData({
           hotlist:res.data.rows,
-          hot_totlapages: res.data.totalPages
+          hot_totalpages: res.data.totalPages
         })
       }
     })
@@ -115,16 +128,15 @@ Page({
   loadNewN: function () {
     var that = this;
     wx.request({
-      url: 'http://localhost:8080/article/getNewNList',
+      url: app.globalData.host +'/article/getNewNList',
       data: {
         page: that.data.new_currentpage
       },
       success: function (res) {
         that.setData({
           newlist: res.data.rows,
-          new_totlapages: res.data.totalPages
+          new_totalpages: res.data.totalPages
         })
-        console.log(that.data.hotlist)
       }
     })
   },

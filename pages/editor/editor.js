@@ -23,7 +23,6 @@ Page({
         })
       }
     })
-
     //定义动画效果
     var fadeOutLeft = wx.createAnimation({
       duration: 200,
@@ -62,7 +61,6 @@ Page({
     })
   },
   bindPickerChange: function(e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       index: e.detail.value
     })
@@ -73,7 +71,6 @@ Page({
     let type = e.target.dataset.type;
     let blocks = this.data.blocks;
     let index = e.target.dataset.index;
-
     if (type == "image") {
       blocks[index].type = type; //为什么有这个属性？可以直接添加       
       this._handImageUpload(index);

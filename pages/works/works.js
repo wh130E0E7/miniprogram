@@ -1,7 +1,7 @@
 // pages/favorite/favorite.js
-var token=''
-var app=getApp()
+var token = ''
 Page({
+
   /**
    * 页面的初始数据
    */
@@ -11,7 +11,7 @@ Page({
     loadingFailed: false,
     currentpage: 1,
     articleList: [],
-    totalpages: null,
+    totlapages: null,
     flag: true
   },
 
@@ -25,7 +25,7 @@ Page({
       title: '加载中',
     })
     wx.request({
-      url: app.globalData.host +'/user/getFavoriteList',
+      url: 'http://localhost:8080/user/getWorkList',
       data: {
         page: that.data.currentpage
       },
@@ -36,7 +36,7 @@ Page({
         wx.hideLoading()
         that.setData({
           articleList: res.data.rows,
-          totalpages: res.data.totalPages
+          totlapages: res.data.totalPages
         })
       }
     })
@@ -49,7 +49,7 @@ Page({
     that.setData({
       flag: false
     })
-    if (this.data.currentpage == this.data.totalpages) {
+    if (this.data.currentpage == this.data.totlapages) {
       this.setData({
         noMore: true
       })
@@ -59,7 +59,7 @@ Page({
       loading: true
     })
     wx.request({
-      url: app.globalData.host +'/user/getFavoriteList',
+      url: 'http://localhost:8080/user/getWorkList',
       data: {
         page: that.data.currentpage + 1
       },
@@ -71,7 +71,7 @@ Page({
           flag: true,
           loading: false,
           articleList: that.data.articleList.concat(res.data.rows),
-          totalpages: res.data.totalPages,
+          totlapages: res.data.totalPages,
           currentpage: that.data.currentpage + 1
         })
       }
