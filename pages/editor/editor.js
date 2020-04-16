@@ -250,25 +250,29 @@ Page({
         containImgpath: containImgpath
       },
       success: function(res) {
-        if (res.data.result == 'success') {
-          wx.navigateBack({
-            success: function(res) {
-              wx.showToast({
-                title: '文章发布成功',
-                duration: 1000,
-                icon: 'success'
-              })
-            }
-          })
-        } else if (res.data.result == 'fail') {
-          wx.showToast({
-            title: '文章发布失败',
-            duration: 1000,
-            icon: 'loading'
-          })
-        } else {
-          //登录过期，被拦截了
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          if (res.data.result == 'success') {
+            wx.navigateBack({
+              success: function (res) {
+                wx.showToast({
+                  title: '文章发布成功',
+                  duration: 1000,
+                  icon: 'success'
+                })
+              }
+            })
+          } else {
+            wx.showToast({
+              title: '文章发布失败',
+              duration: 1000,
+              icon: 'loading'
+            })
+          }
         }
+        else {
+          app.dealStatuscode(res.statusCode)
+        }  
+       
       }
     })
   },

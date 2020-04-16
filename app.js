@@ -31,6 +31,25 @@ App({
       }
     })
   },
+  dealStatuscode:function(code){
+  if(code> 500){
+  wx.showToast({
+    title: '服务器故障',
+  })
+  }else if(code>=400&&code<500) {
+  wx.showToast({
+    title: '客户端故障',
+  })
+  }
+  else if(code>=200&&code<300){
+
+  }
+  else {
+    wx.showToast({
+      title: '未知错误',
+    })
+  }
+} ,
   openSocket(app) {
     var that=app;
     //打开时的动作
@@ -55,7 +74,7 @@ App({
     })
     // 打开信道
     wx.connectSocket({
-      url: "ws://localhost:8080/websocket/" + wx.getStorageSync('token'),
+      url: that.globalData.websocketurl + wx.getStorageSync('token'),
     })
   },
 
@@ -99,6 +118,7 @@ App({
     token:null,
     newMessageNums:0,
     host:'http://localhost:8080',
+    websocketurl:"ws://localhost:8080/websocket/",
     socketStatus: 'closed',
     COS_SecretId:'',
     COS_SecretKey:''

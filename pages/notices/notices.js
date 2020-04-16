@@ -83,6 +83,7 @@ Page({
         token: token
       },
       success: function (res) {
+        
         that.setData({
           followMessageList: res.data.rows,
           follow_totalnums: res.data.totalNums

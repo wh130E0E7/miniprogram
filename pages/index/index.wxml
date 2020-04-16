@@ -12,7 +12,7 @@
   </view>
   <swiper style="height:84vh" class="" current="{{currentTab}}" duration="300" bindchange="swiperTab">
     <swiper-item>
-      <scroll-view refresher-enabled  lower-threshold="50" bindscrolltolower="hot_loadMore" style="height:100%" scroll-y>
+      <scroll-view   lower-threshold="20"  bindscrolltolower="hot_loadMore" style="height:100%" scroll-y>
         <list articleList="{{hotlist}}"></list>
         <view style="text-align: center;margin: 10px;">
           <view wx:if="{{hot_loading}}">加载中...</view>
@@ -22,7 +22,7 @@
       </scroll-view>
     </swiper-item>
     <swiper-item>
-      <scroll-view refresher-enabled bindscrolltolower="new_loadMore" style="height:100%" scroll-y>
+      <scroll-view  lower-threshold="20" bindscrolltolower="new_loadMore"  style="height:100%" scroll-y>
         <list articleList="{{newlist}}"></list>
         <view style="text-align: center;margin: 10px;">
           <view wx:if="{{new_loading}}">加载中...</view>

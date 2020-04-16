@@ -32,7 +32,6 @@ Page({
       title: '加载中',
     })
     this.loadArticle();
-    
     wx.request({
       url: app.globalData.host +'/article/selectArticleByIdForLoginUser',
       data:{
@@ -56,16 +55,21 @@ Page({
         articleId: articleId
       },
       success: function (res) {
-        var _content = res.data.article.content;
-        title = res.data.article.title;
-        authorId = res.data.article.author.openid;
-        wx.hideLoading()
-        //文章加载成功，则加载是否关注，评论，收藏等
-        that.load();
-        that.setData({
-          article: res.data.article
-        });
-        WxParse.wxParse('content', 'html', _content, that, 0);
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          var _content = res.data.article.content;
+          title = res.data.article.title;
+          authorId = res.data.article.author.openid;
+          wx.hideLoading()
+          //文章加载成功，则加载是否关注，评论，收藏等
+          that.load();
+          that.setData({
+            article: res.data.article
+          });
+          WxParse.wxParse('content', 'html', _content, that, 0);
+        }
+        else {
+          app.dealStatuscode(res.statusCode)
+        } 
       }
     })
   },
@@ -159,10 +163,8 @@ Page({
             that.setData({
               isfollow:!that.data.isfollow
             })
-          }else if(res.data==false){
-            //操作失败
           }else{
-            //登录过期
+            //操作失败
           }
         }
       })
@@ -245,9 +247,14 @@ Page({
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         success : function(res){
-          that.setData({
-            commentList:res.data
-          })    
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            that.setData({
+              commentList: res.data
+            })  
+          }
+          else {
+            app.dealStatuscode(res.statusCode)
+          }  
         }
     }) 
   },
@@ -287,19 +294,13 @@ Page({
           })
           //刷新评论
           that.loadComments()
-        } else if (res.data == true) {
+        } else{
           wx.showToast({
             title: '评论失败',
             icon: 'success',
             duration: 2000
           })
-        } else {
-          wx.showToast({
-            title: '登录过期',
-            icon: 'success',
-            duration: 2000
-          })
-        }
+        }   
       }
     })
   },
@@ -372,19 +373,13 @@ Page({
             iscomment:true,
             [temp]: that.data.commentList[that.data.index].replyNums + 1
           })
-        } else if (res.data == false) {
+        } else {
           wx.showToast({
             title: '回复失败',
             icon: 'success',
             duration: 2000
           })
-        } else {
-          wx.showToast({
-            title: '登录过期',
-            icon: 'success',
-            duration: 2000
-          })
-        }
+        } 
       }
     })
   }

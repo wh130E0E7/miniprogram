@@ -1,5 +1,4 @@
 {
-"disableScroll": true,
 "usingComponents": {
   "list": "/components/list/list"
 },

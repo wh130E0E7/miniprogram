@@ -67,13 +67,27 @@ Page({
         token: token
       },
       success: function (res) {
-        that.setData({
-          flag: true,
-          loading: false,
-          articleList: that.data.articleList.concat(res.data.rows),
-          totlapages: res.data.totalPages,
-          currentpage: that.data.currentpage + 1
-        })
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          that.setData({
+            flag: true,
+            loading: false,
+            articleList: that.data.articleList.concat(res.data.rows),
+            totlapages: res.data.totalPages,
+            currentpage: that.data.currentpage + 1
+          })
+        }
+        else {
+          that.setData({
+            loadingFailed: true,
+          })
+          setTimeout(function () {
+            that.setData({
+              loadingFailed: false,
+            })
+          }, 2000)
+          //显示加载失败,俩秒后改回
+          app.dealStatuscode(res.statusCode)
+        }  
       }
     })
   },

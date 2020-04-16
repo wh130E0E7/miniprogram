@@ -14,7 +14,7 @@
   <view wx:if="{{totalnums>0}}">
     <view>共有{{totalnums}}篇文章</view>
     <view>
-      <scroll-view refresher-enabled bindscrolltolower="loadMore" style="height:86vh" scroll-y>
+      <scroll-view  bindscrolltolower="loadMore" style="height:86vh" scroll-y>
         <list articleList="{{searchResList}}"></list>
         <view style="text-align: center;margin: 10px;">
           <view wx:if="{{loading}}">加载中...</view>

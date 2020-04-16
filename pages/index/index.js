@@ -15,14 +15,12 @@ Page({
     new_flag: true,
     new_currentpage: 1,
     new_totalpages: null,
-   
     new_loading:false,
     new_noMore:false,
     new_loadingFailed:false,
     hot_loading: false,
     hot_noMore: false,
     hot_loadingFailed: false,
-   
     currentTab: 0,
   },
   //最热列表加载下一页
@@ -50,13 +48,27 @@ Page({
         page: that.data.hot_currentpage + 1
       },
       success: function (res) {
-        that.setData({
-          hot_flag:true,
-          hot_loading: false,
-          hotlist: that.data.hotlist.concat(res.data.rows),
-          hot_totalpages: res.data.totalPages,
-          hot_currentpage: that.data.hot_currentpage + 1
-        })
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          that.setData({
+            hot_flag: true,
+            hot_loading: false,
+            hotlist: that.data.hotlist.concat(res.data.rows),
+            hot_totalpages: res.data.totalPages,
+            hot_currentpage: that.data.hot_currentpage + 1
+          })
+        }
+        else {
+          that.setData({
+            hot_loadingFailed: true,
+          })
+          setTimeout(function () {
+            that.setData({
+              hot_loadingFailed: false,
+            })
+          }, 2000)
+          //显示加载失败,俩秒后改回
+          app.dealStatuscode(res.statusCode)
+        }  
       }
     })
   },
@@ -84,17 +96,30 @@ Page({
         page: that.data.new_currentpage + 1
       },
       success: function (res) {
-        that.setData({
-          new_flag: true,
-          new_loading: false,
-          newlist: that.data.newlist.concat(res.data.rows),
-          new_totalpages: res.data.totalPages,
-          new_currentpage: that.data.new_currentpage + 1
-        })
-      }
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            that.setData({
+              new_flag: true,
+              new_loading: false,
+              newlist: that.data.newlist.concat(res.data.rows),
+              new_totalpages: res.data.totalPages,
+              new_currentpage: that.data.new_currentpage + 1
+            })
+          }
+          else {
+            that.setData({
+              new_loadingFailed: true,
+            })
+            setTimeout(function () {
+              that.setData({
+                new_loadingFailed: false,
+              })
+            }, 2000)
+            //显示加载失败,俩秒后改回
+            app.dealStatuscode(res.statusCode)
+          }
+        }
     })
   },
-  //页面首次加载，判断是否登录，登录的话就申请特定的推荐列表，未登录就申请默认的推荐列表
   onLoad: function(options) {
     //初始化新消息数量
     var that = this;
@@ -107,9 +132,16 @@ Page({
         newMessageNums: app.globalData.newMessageNums
       })
     }, 5000);
-    // 页面初始化 options为页面跳转所带来的参数
+  },
+  //每次返回都自动刷新页面
+  onShow:function(){
+    this.loadNewN();
     this.loadTopN();
-    this.loadNewN(); 
+    //重新将页面设为1
+    this.setData({
+      hot_currentpage: 1,
+      new_currentpage: 1,
+    })
   },
   //加载最热文章
   loadTopN:function(){
@@ -120,10 +152,16 @@ Page({
         page: 1
       },
       success:function(res){
-        that.setData({
-          hotlist:res.data.rows,
-          hot_totalpages: res.data.totalPages
-        })
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          that.setData({
+            hotlist: res.data.rows,
+            hot_totalpages: res.data.totalPages
+          })
+        }
+        else {
+          app.dealStatuscode(res.statusCode)
+        }  
+        
       }
     })
   },
@@ -136,10 +174,15 @@ Page({
         page: 1
       },
       success: function (res) {
-        that.setData({
-          newlist: res.data.rows,
-          new_totalpages: res.data.totalPages
-        })
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          that.setData({
+            newlist: res.data.rows,
+            new_totalpages: res.data.totalPages
+          })
+        }
+        else {
+          app.dealStatuscode(res.statusCode)
+        } 
       }
     })
   },

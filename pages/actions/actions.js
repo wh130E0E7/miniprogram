@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    refresh:false,
     loading: false,
     noMore: false,
     loadingFailed: false,
@@ -31,14 +32,15 @@ Page({
     }
   },
   onshow:function(){
+    //目前为登录状态但是之前未登录,重新加载文章
+    if (app.globalData.islogin &&!this.data.islogin){
+      this.loadContent();
+    }
     this.setData({
       islogin: app.globalData.islogin
     })
-    //登录了还是没有文章
-    if (articleList.length = 0 && app.globalData.islogin){
-      this.loadContent();
-    }
   },
+  //加载内容
   loadContent:function(){
     wx.showLoading({
       title: '加载中',
@@ -50,22 +52,28 @@ Page({
     //加载内容
     var that = this;
     wx.request({
-      url: app.globalData.host+'/user/getActionList',
+      url:  app.globalData.host+'/user/getActionList',
       data: {
-        page: that.data.currentpage
+        page: 1
       },
       header: {
         token: token
       },
       success: function (res) {
         wx.hideLoading()
-        that.setData({
-          articleList: res.data.rows,
-          totlapages: res.data.totalPages
-        })
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          that.setData({
+            articleList: res.data.rows,
+            totlapages: res.data.totalPages
+          })
+        }
+        else {
+          app.dealStatuscode(res.statusCode)
+        }  
       }
     })
   },
+  //加载下一页
   loadMore: function () {
     if (!this.data.flag) {
       return
@@ -92,63 +100,91 @@ Page({
         token: token
       },
       success: function (res) {
-        that.setData({
-          flag: true,
-          loading: false,
-          articleList: that.data.articleList.concat(res.data.rows),
-          totlapages: res.data.totalPages,
-          currentpage: that.data.currentpage + 1
-        })
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          that.setData({
+            flag: true,
+            loading: false,
+            articleList: that.data.articleList.concat(res.data.rows),
+            totlapages: res.data.totalPages,
+            currentpage: that.data.currentpage + 1
+          })
+        }
+        else {
+          that.setData({
+            loadingFailed: true,
+          })
+          setTimeout(function () {
+            that.setData({
+              loadingFailed: false,
+            })
+          }, 2000)
+          //显示加载失败,俩秒后改回
+          app.dealStatuscode(res.statusCode)
+        } 
       }
     })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  //下拉刷新
+  refresh:function(){
+    if (!this.data.flag) {
+      return
+    }
+    var that = this;
+    that.setData({
+      flag: false
+    })
+    this.setData({
+      refresh: true
+    })
+    //加载内容
+    var that = this;
+    wx.request({
+      url: app.globalData.host + '/user/getActionSize',
+      header: {
+        token: token
+      },
+      success: function (res) {
+        
+        that.setData({
+          refresh: false,
+          flag: true
+        })
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          if (res.data > 0) {
+            //提示新增多少动态
+            wx.showToast({
+              title: '新增' + res.data + '动态',
+              icon: 'none'
+            })
+            //重新加载页面
+            wx.request({
+              url: app.globalData.host + '/user/getActionList',
+              data: {
+                page: 1
+              },
+              header: {
+                token: token
+              },
+              success: function (res) {
+                that.setData({
+                  articleList: res.data.rows,
+                  totlapages: res.data.totalPages
+                })
+              }
+            })
+          } else {
+            //提示暂无新动态
+            wx.showToast({
+              title: '暂无新动态',
+              icon: 'none'
+            })
+          }
+        }
+        else {
+          app.dealStatuscode(res.statusCode)
+        }  
+      }
+    })
+   
   }
 })

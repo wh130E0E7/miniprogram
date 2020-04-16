@@ -50,11 +50,16 @@ Page({
      },
      success: function (res) {
        wx.hideLoading()
-       that.setData({
-         searchResList: res.data.rows,
-         totalpages: res.data.totalPage,
-         totalnums: res.data.totalNums
-       })
+       if (res.statusCode >= 200 && res.statusCode < 300) {
+         that.setData({
+           searchResList: res.data.rows,
+           totalpages: res.data.totalPage,
+           totalnums: res.data.totalNums
+         })
+       }
+       else {
+         app.dealStatuscode(res.statusCode)
+       } 
      }
    })
   },
@@ -82,12 +87,26 @@ Page({
         page: that.data.currentpage + 1,
       },
       success: function (res) {
-        that.setData({
-          flag: true,
-          loading: false,
-          searchResList: that.data.searchResList.concat(res.data.rows),
-          currentpage: that.data.currentpage + 1
-        })
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          that.setData({
+            flag: true,
+            loading: false,
+            searchResList: that.data.searchResList.concat(res.data.rows),
+            currentpage: that.data.currentpage + 1
+          })
+        }
+        else {
+          that.setData({
+            loadingFailed: true,
+          })
+          setTimeout(function () {
+            that.setData({
+              loadingFailed: false,
+            })
+          }, 2000)
+          //显示加载失败,俩秒后改回
+          app.dealStatuscode(res.statusCode)
+        }  
       }
     })
   },

@@ -1,5 +1,8 @@
 <view wx:if="{{islogin}}" style="height:100vh">
-<scroll-view refresher-enabled bindscrolltolower="loadMore" style="height:100%" scroll-y>
+<scroll-view  bindscrolltolower="loadMore" bindscrolltoupper="refresh" style="height:100%" scroll-y>
+  <view style="text-align: center;margin: 10px;">
+    <view wx:if="{{refresh}}">刷新中...</view>
+  </view>
   <list articleList="{{articleList}}"></list>
   <view style="text-align: center;margin: 10px;">
     <view wx:if="{{loading}}">加载中...</view>

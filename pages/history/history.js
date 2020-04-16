@@ -18,7 +18,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onShow: function (options) {
     token = wx.getStorageSync('token');
     var that = this;
     wx.showLoading({
@@ -34,10 +34,15 @@ Page({
       },
       success: function (res) {
         wx.hideLoading()
-        that.setData({
-          articleList: res.data.rows,
-          totalpages: res.data.totalPages
-        })
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          that.setData({
+            articleList: res.data.rows,
+            totalpages: res.data.totalPages
+          })
+        }
+        else {
+          app.dealStatuscode(res.statusCode)
+        }  
       }
     })
   },
