@@ -35,7 +35,11 @@
                   <view bindtap="handBlockClose" data-index="{{index}}" class="icon icon-close"></view>
                 </view>
                 <!-- 再选择了文字和图片后，显示编辑窗口 -->
+                <!-- 再选择了文字和图片后，显示编辑窗口 -->
                 <block wx:if="{{ item.type }}">
+                  <block wx:if="{{ item.type=='text' }}">
+                    <textarea maxlength="-1" class="u-textarea" name="field[{{item.index}}]" bindinput="bindContentInput" data-index="{{index}}" value="{{ item.value }}" placeholder="请输入..."></textarea>
+                  </block>
                   <block wx:if="{{ item.type=='image' }}">
                     <input type="text" name="field[{{item.index}}]" value="{{item.value}}" style="display: none;" readonly="readonly" />
                     <image src="{{item.value}}" class="u-image"></image>
