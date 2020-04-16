@@ -44,8 +44,12 @@ Page({
     }
     wx.request({
       url: app.globalData.host +'/article/getTopNList',
+      method:'POST',
       data: {
         page: that.data.hot_currentpage + 1
+      },
+      header:{
+        'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
         if (res.statusCode >= 200 && res.statusCode < 300) {
@@ -92,8 +96,12 @@ Page({
     })
     wx.request({
       url: app.globalData.host +'/article/getNewNList',
+      method:'POST',
       data: {
         page: that.data.new_currentpage + 1
+      },
+      header:{
+        'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
           if (res.statusCode >= 200 && res.statusCode < 300) {
@@ -141,6 +149,10 @@ Page({
     this.setData({
       hot_currentpage: 1,
       new_currentpage: 1,
+      hot_noMore: false,
+      new_noMore: false,
+      new_flag: true,
+      hot_flag: true,
     })
   },
   //加载最热文章
@@ -148,8 +160,12 @@ Page({
     var that=this;
     wx.request({
       url: app.globalData.host +'/article/getTopNList',
+      method:'POST',
       data:{
         page: 1
+      },
+      header:{
+        'content-type': 'application/x-www-form-urlencoded'
       },
       success:function(res){
         if (res.statusCode >= 200 && res.statusCode < 300) {
@@ -170,8 +186,12 @@ Page({
     var that = this;
     wx.request({
       url: app.globalData.host +'/article/getNewNList',
+      method:'POST',
       data: {
         page: 1
+      },
+      header:{
+        'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
         if (res.statusCode >= 200 && res.statusCode < 300) {

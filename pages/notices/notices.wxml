@@ -9,7 +9,7 @@
   <swiper-item>
       <!-- 点赞通知 -->
       <view class="allread">全部已读</view>
-      <scroll-view refresher-enabled bindscrolltolower="loadMoreLikeMessage" style="height:100%" scroll-y>
+      <scroll-view  style="height:100%" scroll-y>
         <view class="item" wx:for="{{likeMessageList}}" wx:key="unique">
           <!-- 头像区域 -->
           <view class="avatararea">
@@ -37,7 +37,7 @@
   <swiper-item>  
      <!-- 评论通知 -->
      <view class="allread">全部已读</view>
-     <scroll-view refresher-enabled bindscrolltolower="loadMoreCommentMessage" style="height:100%" scroll-y>
+     <scroll-view style="height:100%" scroll-y>
       <view class="item" wx:for="{{commentMessageList}}" wx:key="unique">
           <!-- 头像区域 -->
           <view class="avatararea">
@@ -65,7 +65,7 @@
   <swiper-item> 
       <!-- 关注通知 -->
        <view class="allread">全部已读</view>
-      <scroll-view refresher-enabled bindscrolltolower="loadMoreFollowMessage" style="height:100%" scroll-y>
+      <scroll-view  style="height:100%" scroll-y>
       <view class="follow_item" wx:for="{{followMessageList}}" wx:key="unique">
         <image class="follow_avatar" src="{{item.senderAvatarPath}}"></image>
         <view class="follow_nickname"><text class="nickname">@{{item.senderNickname}}</text>关注了你</view>

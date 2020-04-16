@@ -35,10 +35,12 @@ App({
   if(code> 500){
   wx.showToast({
     title: '服务器故障',
+    icon:'none'
   })
   }else if(code>=400&&code<500) {
   wx.showToast({
     title: '客户端故障',
+    icon: 'none'
   })
   }
   else if(code>=200&&code<300){
@@ -47,6 +49,7 @@ App({
   else {
     wx.showToast({
       title: '未知错误',
+      icon: 'none'
     })
   }
 } ,
@@ -117,8 +120,8 @@ App({
     islogin:false,
     token:null,
     newMessageNums:0,
-    host:'http://localhost:8080',
-    websocketurl:"ws://localhost:8080/websocket/",
+    host:'https://www.simplecreate.club',
+    websocketurl:"wss://www.simplecreate.club/websocket/",
     socketStatus: 'closed',
     COS_SecretId:'',
     COS_SecretKey:''

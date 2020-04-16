@@ -16,7 +16,7 @@ Page({
     let that = this;
     //动态获取类别
     wx.request({
-      url: 'http://localhost:8080/type/getTypeList',
+      url: app.globalData.host+'/type/getTypeList',
       success:function(res){
         that.setData({
           typeArray:res.data
@@ -59,6 +59,7 @@ Page({
       'blocks': _blocks //赋值回去
     })
   },
+  //类别选择
   bindPickerChange: function(e) {
     this.setData({
       index: e.detail.value
@@ -210,13 +211,18 @@ Page({
     var containImgpath = '';
     var token = wx.getStorageSync('token');
     if (this.data.title.length == 0) {
-      console.log('标题不得为空');
+      wx.showToast({
+        title: '标题不得为空',
+        icon:'none'
+      })
       //this.showMsg('请写些内容吧');
       return;
     }
     if (this.data.blocks.length == 0) {
-      console.log('内容不得为空');
-      //this.showMsg('请写些内容吧');
+      wx.showToast({
+        title: '内容不得为空',
+        icon: 'none'
+      })
       return;
     }
     this.data.blocks.map(function(n, i) {
@@ -235,7 +241,7 @@ Page({
       summary = summary.slice(0, 100);
     //提交文章
     wx.request({
-      url: 'http://localhost:8080/article/insertArticle',
+      url: app.globalData.host+'/article/insertArticle',
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded' ,// 默认值

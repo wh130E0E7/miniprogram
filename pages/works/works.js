@@ -1,5 +1,6 @@
 // pages/favorite/favorite.js
 var token = ''
+var app=getApp()
 Page({
 
   /**
@@ -14,32 +15,40 @@ Page({
     totlapages: null,
     flag: true
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    token = wx.getStorageSync('token');
+  onShow(){
     var that = this;
     wx.showLoading({
       title: '加载中',
     })
     wx.request({
-      url: 'http://localhost:8080/user/getWorkList',
+      url: app.globalData.host + '/user/getWorkList',
+      method: 'POST',
       data: {
         page: that.data.currentpage
       },
       header: {
-        token: token
+        'content-type': 'application/x-www-form-urlencoded',
+        token: token,
       },
       success: function (res) {
         wx.hideLoading()
         that.setData({
+          loading: false,
+          noMore: false,
+          loadingFailed: false,
+          currentpage: 1,
+          flag: true,
           articleList: res.data.rows,
           totlapages: res.data.totalPages
         })
       }
     })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    token = wx.getStorageSync('token');
   },
   loadMore: function () {
     if (!this.data.flag) {
@@ -59,11 +68,13 @@ Page({
       loading: true
     })
     wx.request({
-      url: 'http://localhost:8080/user/getWorkList',
+      url: app.globalData.host+'/user/getWorkList',
+      method:'POST',
       data: {
         page: that.data.currentpage + 1
       },
       header: {
+        'content-type': 'application/x-www-form-urlencoded',
         token: token
       },
       success: function (res) {
@@ -91,53 +102,4 @@ Page({
       }
     })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

@@ -31,10 +31,16 @@ Page({
       this.loadContent();
     }
   },
-  onshow:function(){
+  onShow:function(){
     //目前为登录状态但是之前未登录,重新加载文章
     if (app.globalData.islogin &&!this.data.islogin){
       this.loadContent();
+      this.setData({
+        loading: false,
+        noMore: false,
+        loadingFailed: false,
+        flag: true,
+      })
     }
     this.setData({
       islogin: app.globalData.islogin
@@ -53,10 +59,12 @@ Page({
     var that = this;
     wx.request({
       url:  app.globalData.host+'/user/getActionList',
+      method:'POST',
       data: {
         page: 1
       },
       header: {
+        'content-type': 'application/x-www-form-urlencoded',
         token: token
       },
       success: function (res) {
@@ -93,10 +101,12 @@ Page({
     })
     wx.request({
       url: app.globalData.host +'/user/getActionList',
+      method:'POST',
       data: {
         page: that.data.currentpage + 1
       },
       header: {
+        'content-type': 'application/x-www-form-urlencoded',
         token: token
       },
       success: function (res) {
@@ -140,11 +150,12 @@ Page({
     var that = this;
     wx.request({
       url: app.globalData.host + '/user/getActionSize',
+      method:'POST',
       header: {
+        'content-type': 'application/x-www-form-urlencoded',
         token: token
       },
       success: function (res) {
-        
         that.setData({
           refresh: false,
           flag: true

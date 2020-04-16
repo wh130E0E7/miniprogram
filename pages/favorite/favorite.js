@@ -26,10 +26,12 @@ Page({
     })
     wx.request({
       url: app.globalData.host +'/user/getFavoriteList',
+      method:'POST',
       data: {
-        page: that.data.currentpage
+        page: 1
       },
       header: {
+        'content-type': 'application/x-www-form-urlencoded',
         token: token
       },
       success: function (res) {
@@ -37,7 +39,12 @@ Page({
         if (res.statusCode >= 200 && res.statusCode < 300) {
           that.setData({
             articleList: res.data.rows,
-            totalpages: res.data.totalPages
+            totalpages: res.data.totalPages,
+            currentpage: 1,
+            loading: false,
+            noMore: false,
+            loadingFailed: false,
+            flag: true
           })
         }
         else {
@@ -65,10 +72,12 @@ Page({
     })
     wx.request({
       url: app.globalData.host +'/user/getFavoriteList',
+      method:'POST',
       data: {
         page: that.data.currentpage + 1
       },
       header: {
+        'content-type': 'application/x-www-form-urlencoded',
         token: token
       },
       success: function (res) {

@@ -63,7 +63,9 @@ Page({
     var that = this;
     wx.request({
       url: app.globalData.host + '/message/getCommentMessage',
+      method:'POST',
       header: {
+        'content-type': 'application/x-www-form-urlencoded',
         token: token
       },
       success: function (res) {
@@ -79,11 +81,12 @@ Page({
     var that = this;
     wx.request({
       url: app.globalData.host + '/message/getFollowMessage',
+      method:'POST',
       header: {
+        'content-type': 'application/x-www-form-urlencoded',
         token: token
       },
       success: function (res) {
-        
         that.setData({
           followMessageList: res.data.rows,
           follow_totalnums: res.data.totalNums

@@ -1,5 +1,7 @@
-<scroll-view  bindscrolltolower="recommend_loadMore" bindscrolltoupper="refresh" style="height:100vh" scroll-y>
+<scroll-view  bindscrolltolower="recommend_loadMore"  lower-threshold="20"bindscrolltoupper="refresh" style="height:100vh" scroll-y>
+    <view style="text-align: center;margin: 10px;">
    <view wx:if="{{refresh}}">刷新中...</view>
+   </view>
   <list articleList="{{recommendlist}}"></list>
   <view style="text-align: center;margin: 10px;">
     <view wx:if="{{recommend_loading}}">加载中...</view>

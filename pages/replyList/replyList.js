@@ -34,12 +34,15 @@ Page({
     var that = this;
     //获取回复列表，回复共有俩种形式，一种直接回复评论，一种回复别人回复
     wx.request({
-      url: 'http://localhost:8080/comment/getReplyList',
+      url: app.globalData.host+'/comment/getReplyList',
+      method:'POST',
       data: {
         commentId: commentId
       },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',// 默认值
+      },
       success: function (res) {
-        console.log(res);
         that.setData({
           replyList: res.data
         })
@@ -76,9 +79,10 @@ Page({
   sendReply: function () {
     var that = this;
     wx.request({
-      url: 'http://localhost:8080/article/insertReply',
-      method: 'GET',
+      url: app.globalData.host+'/article/insertReply',
+      method: 'POST',
       header: {
+          'content-type': 'application/x-www-form-urlencoded',// 默认值
         token: wx.getStorageSync('token'),
       },
       data: {
@@ -135,6 +139,4 @@ Page({
       }
     })
   }
-
-
 })

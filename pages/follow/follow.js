@@ -17,7 +17,9 @@ Page({
     token = wx.getStorageSync('token');
     wx.request({
       url: app.globalData.host + '/user/getFollowList',
+      method:'POST',
       header: {
+        'content-type': 'application/x-www-form-urlencoded',
         token: token
       },
       success: function (res) {

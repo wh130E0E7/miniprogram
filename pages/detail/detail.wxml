@@ -74,7 +74,7 @@
 </view>
 <!--评论框-->
 <view class="commentBar" wx:if="{{iscomment}}">
-  <input class="commentInput" bindinput="onTextChanged" placeholder="发表你的评论吧" value='{{keyword}}' />
+  <input class="commentInput" bindinput="onTextChanged" placeholder="发表你的评论吧" value='{{inputcontent}}' />
   <text class="sendButton" bindtap="sendComment">发表</text>
 </view>
 <!--回复框-->

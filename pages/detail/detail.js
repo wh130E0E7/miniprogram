@@ -81,14 +81,14 @@ Page({
       //判断是否关注了该作者
       wx.request({
         url: app.globalData.host +'/article/isFollow',
-        method: 'GET',
+        method: 'POST',
         data: {
           //作者id
           authorId: authorId
         },
         header: {
+          'content-type': 'application/x-www-form-urlencoded',
           token: token,
-          'Content-Type': 'application/x-www-form-urlencoded'
         },
         success: function (res) {
           if (res.data) {
@@ -101,7 +101,7 @@ Page({
       //判断该文章是否点赞了
       wx.request({
         url: app.globalData.host +'/article/isLike',
-        method: 'GET',
+        method: 'POST',
         data: {
           articleId: articleId
           //文章id
@@ -122,7 +122,7 @@ Page({
       //判断该文章是否收藏了
       wx.request({
         url: app.globalData.host +'/article/isFavorite',
-        method: 'GET',
+        method: 'POST',
         data: {
           articleId: articleId
         },
@@ -151,10 +151,12 @@ Page({
     //关注，取消关注（需要判断是否登录失效）
       wx.request({
         url: app.globalData.host +'/article/follow',
+        method:'POST',
         data:{
           authorId:authorId
         },
         header:{
+          'content-type': 'application/x-www-form-urlencoded',
           token:token
         },
         success:function(res){
@@ -163,8 +165,6 @@ Page({
             that.setData({
               isfollow:!that.data.isfollow
             })
-          }else{
-            //操作失败
           }
         }
       })
@@ -180,12 +180,14 @@ Page({
        //点赞，取消点赞（需要判断是否登录失效）
       wx.request({
         url: app.globalData.host +'/article/like',
+        method:'POST',
         data:{
           authorId:authorId,
           articleId:articleId,
           title:title
         },
         header: {
+          'content-type': 'application/x-www-form-urlencoded',
           token: token
         },
         success:function(res){
@@ -194,11 +196,7 @@ Page({
             that.setData({
               islike: !that.data.islike
             })
-          } else if (res.data == false) {
-            //操作失败
-          } else {
-            //登录过期
-          }
+          } 
         }
       })
     }
@@ -212,10 +210,12 @@ Page({
     } else {
       wx.request({
         url: app.globalData.host +'/article/favorite',
+        method:'POST',
         data: {
           articleId: articleId,
         },
         header: {
+          'content-type': 'application/x-www-form-urlencoded',
           token: token
         },
         success: function (res) {
@@ -224,27 +224,24 @@ Page({
             that.setData({
               isfavorite: !that.data.isfavorite
             })
-          } else if (res.data == false) {
-            //操作失败
-          } else {
-            //登录过期
-          }
+          } 
         }
       })
     } 
   },
   //加载评论
   loadComments:function(){
+    console.log("加载评论")
     var that = this
     //请求评论
     wx.request({
         url: app.globalData.host +'/article/getCommentList',
-        method: 'GET',
+        method: 'POST',
         data : {
           articleId: articleId
         },
-        header: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+        header:{
+          'content-type': 'application/x-www-form-urlencoded',// 默认值
         },
         success : function(res){
           if (res.statusCode >= 200 && res.statusCode < 300) {
@@ -262,15 +259,18 @@ Page({
   sendComment: function (e) {
     //判断是否登录
     if (!app.globalData.islogin){
-      //请先登录
+      wx.showToast({
+        title: "请登录",
+        icon: 'none'
+      })
       return;
     }
     var that = this
-    //发送评论评论 该功能无法使用，仅作保留
     wx.request({
       url: app.globalData.host +'/article/insertComment',
-      method: 'GET',
+      method: 'POST',
       header: {
+        'content-type': 'application/x-www-form-urlencoded',
         token: token
       },
       data: {
@@ -307,6 +307,10 @@ Page({
   //点击回复Ta
   reply:function(e){
     if (!app.globalData.islogin) {
+      wx.showToast({
+        title:"请登录",
+        icon:'none'
+      })
       //请先登录
       return;
     }
@@ -330,9 +334,10 @@ Page({
     var that=this;
     wx.request({
       url: app.globalData.host +'/article/insertReply',
-      method: 'GET',
+      method: 'POST',
       header: {
-        token: wx.getStorageSync('token'),
+        'content-type': 'application/x-www-form-urlencoded',
+        token:token,
       },
       data: {
         //回复内容
