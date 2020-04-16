@@ -1,0 +1,8 @@
+<scroll-view refresher-enabled bindscrolltolower="recommend_loadMore" style="height:100vh" scroll-y>
+  <list articleList="{{recommendlist}}"></list>
+  <view style="text-align: center;margin: 10px;">
+    <view wx:if="{{recommend_loading}}">加载中...</view>
+    <view wx:if="{{recommend_noMore}}">没有更多了</view>
+    <view wx:if="{{recommend_loadingFailed}}">数据加载失败,请重试</view>
+  </view>
+</scroll-view>

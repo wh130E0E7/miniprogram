@@ -13,13 +13,10 @@
               {{typeArray[index].typeContent}}
               <image class="below" src="../../icons/below.png"></image>
             </view>
-
           </picker>
-
         </view>
         <!--标签-->
         <input type="text" class="input" placeholder="添加标签，帮助大家更好的找到这篇文章" bindinput="bindTagInput" />
-
         <!-- 加号负责添加模块 -->
         <view class="weui-cell block__sidebar padding" bindtap="handPlus">
           <view class="weui-cell__bd">
@@ -39,14 +36,8 @@
                 </view>
                 <!-- 再选择了文字和图片后，显示编辑窗口 -->
                 <block wx:if="{{ item.type }}">
-                  <block wx:if="{{ item.type=='text' }}">
-                    <textarea maxlength="-1" class="u-textarea" name="field[{{item.index}}]"
-                      bindinput="bindContentInput" data-index="{{index}}" value="{{ item.value }}"
-                      placeholder="请输入..."></textarea>
-                  </block>
                   <block wx:if="{{ item.type=='image' }}">
-                    <input type="text" name="field[{{item.index}}]" value="{{item.value}}" style="display: none;"
-                      readonly="readonly" />
+                    <input type="text" name="field[{{item.index}}]" value="{{item.value}}" style="display: none;" readonly="readonly" />
                     <image src="{{item.value}}" class="u-image"></image>
                   </block>
                 </block>
@@ -54,12 +45,10 @@
                 <block wx:else>
                   <view class="flex padding">
                     <view class="flex__item block__item-type">
-                      <view class="block__item-type-text" bindtap="bingTypeSelect" data-type='text'
-                        data-index="{{index}}"></view>
+                      <view class="block__item-type-text" bindtap="bingTypeSelect" data-type='text' data-index="{{index}}"></view>
                     </view>
                     <view class="flex__item">
-                      <view class="block__item-type-image" bindtap="bingTypeSelect" data-type='image'
-                        data-index="{{index}}"></view>
+                      <view class="block__item-type-image" bindtap="bingTypeSelect" data-type='image' data-index="{{index}}"></view>
                     </view>
                   </view>
                 </block>

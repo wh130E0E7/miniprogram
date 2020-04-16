@@ -27,6 +27,11 @@
             <view class="publishTime">{{item.publishTime}}</view>
           </view>
         </view>
+        <view style="text-align: center;margin: 10px;">
+          <view wx:if="{{like_loading}}">加载中...</view>
+          <view wx:if="{{like_noMore}}">没有更多了</view>
+          <view wx:if="{{like_loadingFailed}}">数据加载失败,请重试</view>
+        </view>
       </scroll-view>
   </swiper-item> 
   <swiper-item>  
@@ -50,6 +55,11 @@
             <view class="publishTime">{{item.publishTime}}</view>
           </view>
         </view>
+        <view style="text-align: center;margin: 10px;">
+          <view wx:if="{{comment_loading}}">加载中...</view>
+          <view wx:if="{{comment_noMore}}">没有更多了</view>
+          <view wx:if="{{comment_loadingFailed}}">数据加载失败,请重试</view>
+        </view>
      </scroll-view>
   </swiper-item>
   <swiper-item> 
@@ -61,6 +71,11 @@
         <view class="follow_nickname"><text class="nickname">@{{item.senderNickname}}</text>关注了你</view>
         <view class="follow" daset-userId="{{item.senderId}}" bindtap="unfollow">关注</view>
       </view>
+      <view style="text-align: center;margin: 10px;">
+          <view wx:if="{{follow_loading}}">加载中...</view>
+          <view wx:if="{{follow_noMore}}">没有更多了</view>
+          <view wx:if="{{follow_loadingFailed}}">数据加载失败,请重试</view>
+        </view>
      </scroll-view>
 </swiper-item>
 </swiper>

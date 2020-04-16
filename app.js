@@ -1,6 +1,7 @@
 //app.js
 App({ 
   onLaunch: function () {
+    console.log("app--->onLaunch")
     let that = this;
     that.globalData.token =wx.getStorageSync('token')
     wx.request({
@@ -10,7 +11,8 @@ App({
         that.globalData.COS_SecretKey = res.data.COS_SecretKey
       }
     })
-    //检查该用户账号是否过期，没过期直接加载userinfo
+    
+    //检查该用户账号是否过期，没过期直接加载userinfo,如何让这个方法成为同步方法？
     wx.request({
       url: that.globalData.host +'/user/checkLogin',
       data:{
@@ -18,28 +20,29 @@ App({
       },
       success:function(res){
         if(res.data.islogin){
+          console.log("app--->checklogin_finished")
           that.globalData.userInfo=res.data.userInfo
           that.globalData.islogin=true
            //连接websocket,设置newMessageNum
-          that.openSocket();
+          that.openSocket(that);
            //判断关注的人有无新动态，有的话在动态栏上显示数字
            that.load_action_size()
         }
       }
     })
   },
-  openSocket() {
-    var that=this;
+  openSocket(app) {
+    var that=app;
     //打开时的动作
     wx.onSocketOpen(() => {
       console.log('WebSocket 已连接')
-      this.globalData.socketStatus = 'connected';
+      that.globalData.socketStatus = 'connected';
       //this.sendMessage();
     })
     //断开时的动作
     wx.onSocketClose(() => {
       console.log('WebSocket 已断开')
-      this.globalData.socketStatus = 'closed'
+      that.globalData.socketStatus = 'closed'
     })
     //报错时的动作
     wx.onSocketError(error => {
@@ -52,7 +55,7 @@ App({
     })
     // 打开信道
     wx.connectSocket({
-      url: "ws://localhost:8080/websocket/"+that.globalData.token,
+      url: "ws://localhost:8080/websocket/" + wx.getStorageSync('token'),
     })
   },
 

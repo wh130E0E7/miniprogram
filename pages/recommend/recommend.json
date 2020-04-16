@@ -1,0 +1,7 @@
+{
+"disableScroll": true,
+"usingComponents": {
+  "list": "/components/list/list"
+},
+"navigationBarTitleText": "猜你喜欢"
+}

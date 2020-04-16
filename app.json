@@ -1,10 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/search/search",
-
-    "pages/searchResult/searchResult",
     "pages/notices/notices",
+    "pages/search/search",
+    "pages/searchResult/searchResult",
     "pages/detail/detail",
     "pages/replyList/replyList",
     "pages/mine/mine",
@@ -14,7 +13,8 @@
     "pages/favorite/favorite",
     "pages/follow/follow",
     "pages/actions/actions",
-    "pages/works/works"
+    "pages/works/works",
+    "pages/recommend/recommend"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -30,6 +30,12 @@
         "text": "首页",
         "iconPath": "icons/index.png",
         "selectedIconPath": "icons/index_selected.png"
+      },
+      {
+        "pagePath": "pages/recommend/recommend",
+        "text": "推荐",
+        "iconPath": "icons/recommend.png",
+        "selectedIconPath": "icons/recommend_selected.png"
       },
       {
         "pagePath": "pages/actions/actions",

@@ -41,7 +41,6 @@ Page({
   handPlus: function(e) {
     // 绑定增加编辑窗    
     let _order = e.target.dataset.order; //属性传值，所属列表位置
-    console.log(_order);
     let _blocks = this.data.blocks; //获得数组
     // 依次+1，插入编辑窗口
     _blocks.map(function(n, i) { //n为对象，i为该对象在数组位置

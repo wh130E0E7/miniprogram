@@ -1,8 +1,10 @@
 // pages/detail/detail.js
 import util from "../../utils/util.js";
 var app = getApp()
+var token=''
 Page({
   data: {
+    islogin:false,
     //消息数量
     newMessageNums:0,
     hotlist: [], //最热文章列表
@@ -13,17 +15,17 @@ Page({
     new_flag: true,
     new_currentpage: 1,
     new_totalpages: null,
-    recommander: [],
-    recommand_currentpage: 1,
-    recommand_totalpages: null,
+   
     new_loading:false,
     new_noMore:false,
     new_loadingFailed:false,
     hot_loading: false,
     hot_noMore: false,
     hot_loadingFailed: false,
+   
     currentTab: 0,
   },
+  //最热列表加载下一页
   hot_loadMore:function(){
     var that = this;
     if (!this.data.hot_flag) {
@@ -32,7 +34,6 @@ Page({
     that.setData({
       hot_flag: false
     })
-    
     if (this.data.hot_currentpage == this.data.hot_totalpages) {
       this.setData({
         hot_noMore: true
@@ -59,6 +60,7 @@ Page({
       }
     })
   },
+  //最新列表加载下一页
   new_loadMore:function(){
     if (!this.data.new_flag) {
       return
@@ -92,6 +94,7 @@ Page({
       }
     })
   },
+  //页面首次加载，判断是否登录，登录的话就申请特定的推荐列表，未登录就申请默认的推荐列表
   onLoad: function(options) {
     //初始化新消息数量
     var that = this;
@@ -106,7 +109,7 @@ Page({
     }, 5000);
     // 页面初始化 options为页面跳转所带来的参数
     this.loadTopN();
-    this.loadNewN();
+    this.loadNewN(); 
   },
   //加载最热文章
   loadTopN:function(){
@@ -114,7 +117,7 @@ Page({
     wx.request({
       url: app.globalData.host +'/article/getTopNList',
       data:{
-        page: that.data.hot_currentpage
+        page: 1
       },
       success:function(res){
         that.setData({
@@ -130,7 +133,7 @@ Page({
     wx.request({
       url: app.globalData.host +'/article/getNewNList',
       data: {
-        page: that.data.new_currentpage
+        page: 1
       },
       success: function (res) {
         that.setData({
@@ -160,18 +163,24 @@ Page({
       })
     }
   },
+  //点击编写文章界面
   navigateToAddArticle: function() {
     if (app.globalData.islogin) {
       wx.navigateTo({
         url: '../editor/editor',
       })
     } else {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none',
+      })
       //提示请先登录  
       wx.switchTab({
         url: '../mine/mine',
       })
     }
   },
+  //点击消息通知界面
   navigateToNotices: function() {
     if (app.globalData.islogin) {
       wx.navigateTo({
@@ -179,6 +188,10 @@ Page({
       })
     } else {
       //提示请先登录  
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none',
+      })
       wx.switchTab({
         url: '../mine/mine',
       })

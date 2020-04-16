@@ -97,7 +97,7 @@ Page({
                userInfo:res.data
              })
              //开启websocket连接    
-             app.openSocket();
+             app.openSocket(app);
               //获取动态数量
              app.load_action_size();
            }
@@ -143,5 +143,6 @@ Page({
         }
       });
     }
-  }
+  },
+  
 })

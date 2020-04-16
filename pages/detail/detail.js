@@ -28,8 +28,6 @@ Page({
   onLoad:function(options){
     token=wx.getStorageSync('token');
     articleId = options.articleId 
-    //articleId = '626a234a-6478-43fa-a8c4-54b4469e5be7'
-    //请求文章详情
     wx.showLoading({
       title: '加载中',
     })
