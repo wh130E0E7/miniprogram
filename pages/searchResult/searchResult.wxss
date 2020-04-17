@@ -49,3 +49,7 @@
   color: #09bb07;
   white-space: nowrap;
 }
+.prompt{
+  position: relative;
+  z-index: 1;
+}

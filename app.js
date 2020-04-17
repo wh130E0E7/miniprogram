@@ -95,7 +95,9 @@ App({
     let that = this;
     wx.request({
       url: that.globalData.host +'/user/getActionSize',
+      method:'POST',
       header:{
+        'content-type': 'application/x-www-form-urlencoded',
         token: that.globalData.token
       },
       success:function(res){
@@ -107,7 +109,7 @@ App({
             })
           }else{
             wx.setTabBarBadge({
-              index: 1,
+              index: 2,
               text: '' + res.data + '',
             })
           }

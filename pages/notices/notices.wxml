@@ -4,12 +4,12 @@
   <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">评论</view>
   <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">关注</view>
 </view>
-
-<swiper style="height:94vh" current="{{currentTab}}" duration="300"  bindchange="swiperTab">
+<swiper style="height:93vh" current="{{currentTab}}" duration="300"  bindchange="swiperTab">
   <swiper-item>
       <!-- 点赞通知 -->
-      <view class="allread">全部已读</view>
-      <scroll-view  style="height:100%" scroll-y>
+      <view wx:if="{{likeMessageList.length>0}}">
+      <view  bindtap="likeMessageAllRead"   class="allread">全部已读</view>
+      <scroll-view  style="height:100%"   scroll-y>
         <view class="item" wx:for="{{likeMessageList}}" wx:key="unique">
           <!-- 头像区域 -->
           <view class="avatararea">
@@ -29,15 +29,17 @@
         </view>
         <view style="text-align: center;margin: 10px;">
           <view wx:if="{{like_loading}}">加载中...</view>
-          <view wx:if="{{like_noMore}}">没有更多了</view>
           <view wx:if="{{like_loadingFailed}}">数据加载失败,请重试</view>
         </view>
       </scroll-view>
+      </view>
+      <view wx:else>暂无新消息</view>
   </swiper-item> 
   <swiper-item>  
      <!-- 评论通知 -->
-     <view class="allread">全部已读</view>
-     <scroll-view style="height:100%" scroll-y>
+     <view  wx:if="{{commentMessageList.length>0}}" >
+     <view bindtap="commentMessageAllRead"  class="allread">全部已读</view>
+     <scroll-view  style="height:100%" scroll-y>
       <view class="item" wx:for="{{commentMessageList}}" wx:key="unique">
           <!-- 头像区域 -->
           <view class="avatararea">
@@ -57,25 +59,27 @@
         </view>
         <view style="text-align: center;margin: 10px;">
           <view wx:if="{{comment_loading}}">加载中...</view>
-          <view wx:if="{{comment_noMore}}">没有更多了</view>
           <view wx:if="{{comment_loadingFailed}}">数据加载失败,请重试</view>
         </view>
      </scroll-view>
+     </view>
+     <view wx:else>暂无新消息</view>
   </swiper-item>
   <swiper-item> 
       <!-- 关注通知 -->
-       <view class="allread">全部已读</view>
+      <view wx:if="{{followMessageList.length>0}}">
+       <view  bindtap="followMessageAllRead"  class="allread">全部已读</view>
       <scroll-view  style="height:100%" scroll-y>
       <view class="follow_item" wx:for="{{followMessageList}}" wx:key="unique">
         <image class="follow_avatar" src="{{item.senderAvatarPath}}"></image>
         <view class="follow_nickname"><text class="nickname">@{{item.senderNickname}}</text>关注了你</view>
-        <view class="follow" daset-userId="{{item.senderId}}" bindtap="unfollow">关注</view>
       </view>
       <view style="text-align: center;margin: 10px;">
           <view wx:if="{{follow_loading}}">加载中...</view>
-          <view wx:if="{{follow_noMore}}">没有更多了</view>
           <view wx:if="{{follow_loadingFailed}}">数据加载失败,请重试</view>
         </view>
      </scroll-view>
+     </view>
+     <view wx:else>暂无消息</view>
 </swiper-item>
 </swiper>

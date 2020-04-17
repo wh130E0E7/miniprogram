@@ -7,7 +7,6 @@ Page({
    */
   data: {
     loading: false,
-    noMore: false,
     loadingFailed: false,
     currentpage: 1,
     articleList: [],
@@ -42,7 +41,6 @@ Page({
             totalpages: res.data.totalPages,
             currentpage: 1,
             loading: false,
-            noMore: false,
             loadingFailed: false,
             flag: true
           })
@@ -62,8 +60,10 @@ Page({
       flag: false
     })
     if (this.data.currentpage == this.data.totalpages) {
-      this.setData({
-        noMore: true
+      wx.showToast({
+        title: '没有更多了',
+        icon: 'none',
+        duration: 3000
       })
       return;
     }

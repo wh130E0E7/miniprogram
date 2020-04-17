@@ -1,1 +1,5 @@
 /* pages/recommend/recommend.wxss */
+.prompt{
+  position: relative;
+  z-index: 1;
+}

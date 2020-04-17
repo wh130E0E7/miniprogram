@@ -8,7 +8,6 @@ Page({
    */
   data: {
     loading: false,
-    noMore: false,
     loadingFailed: false,
     currentpage: 1,
     articleList: [],
@@ -34,7 +33,6 @@ Page({
         wx.hideLoading()
         that.setData({
           loading: false,
-          noMore: false,
           loadingFailed: false,
           currentpage: 1,
           flag: true,
@@ -59,8 +57,9 @@ Page({
       flag: false
     })
     if (this.data.currentpage == this.data.totlapages) {
-      this.setData({
-        noMore: true
+      wx.showToast({
+        title: '没有更多了',
+        icon: 'none'
       })
       return;
     }

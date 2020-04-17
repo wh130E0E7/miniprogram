@@ -8,8 +8,13 @@
 .userInfo{
     padding:5px;
     display:flex;
+    justify-content: space-between;
     border-bottom: 2rpx solid #ccc;
     margin-bottom: 50rpx;
+}
+.avatarAndnickname{
+  display: flex;
+  align-items: center;
 }
 .avatar{
     height: 60rpx;
@@ -21,7 +26,6 @@
    margin-top: 10rpx;
 }
 .follow{
-    margin-left: 300rpx;
     border: 2rpx solid #ccc;
     color: red;
     background-color: white;
@@ -29,10 +33,9 @@
     padding-right: 10px;
     line-height: 50rpx;  /** 垂直居中 **/ 
     text-align: center;   /** 水平居中 **/ 
-    border-radius: 10rpx;
+    border-radius: 5rpx;
   }
 .unfollow{
-    margin-left: 300rpx;
     border: 2rpx solid #ccc;
     color: rgb(17, 16, 16);
     background-color: white;
@@ -40,19 +43,17 @@
     padding-right: 5px;
     line-height: 50rpx;  /** 垂直居中 **/ 
     text-align: center;   /** 水平居中 **/ 
-      border-radius: 10rpx;
+    border-radius: 5rpx;
 }
 .date{
     font-size: 15px;
     color:#aaa;
 }
-
 .cnt{
     font-size: 15px;
     color:#aaa;
     float:right;
 }
-
 .content{
 background-color: rgba(241, 235, 235, 0.082);
 margin-bottom: 20rpx;

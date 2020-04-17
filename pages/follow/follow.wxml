@@ -1,9 +1,9 @@
-<view style="height:100vh">
-  <scroll-view  bindscrolltolower="loadMore"  style="height:100%" scroll-y>
-    <view class="item" wx:for="{{userList}}" wx:key="unique">
-        <image class="avatar" src="{{item.avatarPath}}"></image>
-        <text class="nickname">{{item.nickname}}</text>
-        <view class="follow" daset-userId="{{item.openid}}" bindtap="unfollow">已关注</view>
-      </view>
-  </scroll-view>
+<scroll-view bindscrolltolower="loadMore" style="height:100vh" scroll-y>
+  <view class="item" wx:for="{{userList}}" wx:key="unique">
+    <view class="avatarAndnickname">
+      <image class="avatar" src="{{item.avatarPath}}"></image>
+      <text class="nickname">{{item.nickname}}</text>
+    </view>
+    <view class="follow" data-userId="{{item.openid}}" bindtap="unfollow">已关注</view>
   </view>
+</scroll-view>

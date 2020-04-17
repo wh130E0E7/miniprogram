@@ -19,7 +19,7 @@
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#0094ff",
-    "navigationBarTitleText": "SimpleCreate",
+    "navigationBarTitleText": "SimpleWrite",
     "navigationBarTextStyle": "black",
     "enablePullDownRefresh": false
   },

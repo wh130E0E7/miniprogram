@@ -14,9 +14,8 @@
     <swiper-item>
       <scroll-view   lower-threshold="20"  bindscrolltolower="hot_loadMore" style="height:100%" scroll-y>
         <list articleList="{{hotlist}}"></list>
-        <view style="text-align: center;margin: 10px;">
+        <view  class="prompt" style="text-align: center;margin: 10px;">
           <view wx:if="{{hot_loading}}">加载中...</view>
-          <view wx:if="{{hot_noMore}}">没有更多了</view>
           <view wx:if="{{hot_loadingFailed}}">数据加载失败,请重试</view>
         </view>
       </scroll-view>
@@ -24,15 +23,14 @@
     <swiper-item>
       <scroll-view  lower-threshold="20" bindscrolltolower="new_loadMore"  style="height:100%" scroll-y>
         <list articleList="{{newlist}}"></list>
-        <view style="text-align: center;margin: 10px;">
+        <view  class="prompt" style="text-align: center;margin: 10px;">
           <view wx:if="{{new_loading}}">加载中...</view>
-          <view wx:if="{{new_noMore}}">没有更多了</view>
           <view wx:if="{{new_loadingFailed}}">数据加载失败,请重试</view>
         </view>
       </scroll-view>
     </swiper-item>
   </swiper>
-  <view  class="addArticle" bindtap="navigateToAddArticle">
+  <view wx:if="{{!(new_loading||hot_loading)}}" class="addArticle" bindtap="navigateToAddArticle">
     <image src="../../icons/addArticle.png"></image>
   </view>
   <view class="notices" bindtap="navigateToNotices">

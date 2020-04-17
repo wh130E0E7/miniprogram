@@ -13,7 +13,6 @@ Page({
     recommend_currentpage: 1,
     recommend_totalpages: null,
     recommend_loading: false,
-    recommend_noMore: false,
     recommend_loadingFailed: false,
     islogin:false,
   },
@@ -26,7 +25,6 @@ Page({
     if (app.globalData.islogin&&!this.data.islogin){
       this.setData({
         recommend_loading: false,
-        recommend_noMore: false,
         recommend_loadingFailed: false,
         recommend_currentpage: 1,
         recommend_flag: true,
@@ -76,7 +74,11 @@ Page({
     })
     if (this.data.recommend_currentpage == this.data.recommend_totalpages) {
       this.setData({
-        recommend_noMore: true
+        recommend_flag: true
+      })
+      wx.showToast({
+        title: '没有更多了',
+        icon: 'none'
       })
       return;
     }

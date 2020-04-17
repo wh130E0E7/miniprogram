@@ -1,9 +1,14 @@
 /* pages/fellow/fellow.wxss */
 .item{
 display: flex;
+justify-content: space-between;
 margin-top: 10rpx;
 padding-bottom: 10rpx;
 border-bottom: 2rpx solid #ccc;
+}
+.avatarAndnickname{
+  display: flex;
+  align-items: center;
 }
 .avatar{
     height:70rpx;
@@ -16,7 +21,7 @@ border-bottom: 2rpx solid #ccc;
 }
 .follow{
     height: 50rpx;
-     margin-left: 300rpx;
+     margin-right: 30rpx;
     border: 2rpx solid #ccc;
     color: rgb(17, 16, 16);
     background-color: white;

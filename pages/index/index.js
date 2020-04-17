@@ -1,4 +1,3 @@
-// pages/detail/detail.js
 import util from "../../utils/util.js";
 var app = getApp()
 var token=''
@@ -16,10 +15,8 @@ Page({
     new_currentpage: 1,
     new_totalpages: null,
     new_loading:false,
-    new_noMore:false,
     new_loadingFailed:false,
     hot_loading: false,
-    hot_noMore: false,
     hot_loadingFailed: false,
     currentTab: 0,
   },
@@ -33,8 +30,10 @@ Page({
       hot_flag: false
     })
     if (this.data.hot_currentpage == this.data.hot_totalpages) {
-      this.setData({
-        hot_noMore: true
+      //flag不重新设为true,则将无法继续上拉
+      wx.showToast({
+        title: '没有更多了',
+        icon: 'none'
       })
       return;
     }else{
@@ -86,8 +85,9 @@ Page({
       new_flag: false
     })
     if (this.data.new_currentpage == this.data.new_totalpages) {
-      this.setData({
-        new_noMore: true
+      wx.showToast({
+        title: '没有更多了',
+        icon: 'none'
       })
       return;
     }
@@ -134,7 +134,7 @@ Page({
     that.setData({
       newMessageNums: app.globalData.newMessageNums
     })
-    //每隔十秒获取新消息数量
+    //每隔5秒获取新消息数量
     setInterval(function () {
       that.setData({
         newMessageNums: app.globalData.newMessageNums
@@ -149,8 +149,6 @@ Page({
     this.setData({
       hot_currentpage: 1,
       new_currentpage: 1,
-      hot_noMore: false,
-      new_noMore: false,
       new_flag: true,
       hot_flag: true,
     })

@@ -5,11 +5,11 @@
   </view>
   <navigator url="../detail/detail?articleId={{item.articleId}}">
     <view class="contentAndimg">
-      <view>
+      <view class="titleAndsummary">
         <view class="common">
           <text class="title">{{item.title}}</text>
         </view>
-        <view class="common content">
+        <view class="common summary">
           {{item.summary}}
         </view>
       </view>
@@ -18,4 +18,14 @@
       </view>
     </view>
   </navigator>
+  <view class="icons">
+    <view class="comment">
+      <image class="icon" src="../../icons/comment.png"></image>
+      <view class="commentnums">{{item.commentNums}}</view>
+    </view>
+    <view class="recommend">
+      <image class="icon" src="../../icons/recommender.png"></image>
+      <view class="recommendnums">{{item.likeNums}}</view>
+    </view>
+  </view>
 </view>

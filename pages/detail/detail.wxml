@@ -8,12 +8,14 @@
 </view>
 <!--作者信息-->
 <view class="userInfo">
+<view class="avatarAndnickname">
   <!--头像-->
   <image class="avatar" src="{{article.author.avatarPath}}"></image>
   <!--昵称-->
   <view class="nickname">
     {{article.author.nickname}}
   </view>
+</view>  
   <!--关注/取消关注按钮,需要传入作者的id,根据js中的isfollow判断显示关注还是已关注-->
   <view class="unfollow" wx:if="{{isfollow}}" bindtap="follow">
     已关注

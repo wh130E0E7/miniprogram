@@ -11,11 +11,10 @@ Page({
   data: {
     refresh:false,
     loading: false,
-    noMore: false,
     loadingFailed: false,
     currentpage: 1,
     articleList: [],
-    totlapages: null,
+    totalpages: null,
     flag: true,
     islogin:false,
   },
@@ -28,19 +27,13 @@ Page({
       islogin: app.globalData.islogin
     })
     if (app.globalData.islogin){
+      //因为app加载的时候就已经刷新过一次动态列表了，就直接获取就可以了
       this.loadContent();
     }
   },
   onShow:function(){
-    //目前为登录状态但是之前未登录,重新加载文章
-    if (app.globalData.islogin &&!this.data.islogin){
-      this.loadContent();
-      this.setData({
-        loading: false,
-        noMore: false,
-        loadingFailed: false,
-        flag: true,
-      })
+    if (app.globalData.islogin&&!this.data.islogin) {
+      this.getnewContent();
     }
     this.setData({
       islogin: app.globalData.islogin
@@ -53,12 +46,12 @@ Page({
     })
     //隐藏数字红点
     wx.hideTabBarRedDot({
-      index: 1
+      index: 2
     })
     //加载内容
     var that = this;
     wx.request({
-      url:  app.globalData.host+'/user/getActionList',
+      url: app.globalData.host+'/user/getActionList',
       method:'POST',
       data: {
         page: 1
@@ -72,7 +65,12 @@ Page({
         if (res.statusCode >= 200 && res.statusCode < 300) {
           that.setData({
             articleList: res.data.rows,
-            totlapages: res.data.totalPages
+            totlapages: res.data.totalPages,
+             loading: false,
+            noMore: false,
+            loadingFailed: false,
+            flag: true,
+            currentpage:1
           })
         }
         else {
@@ -90,9 +88,14 @@ Page({
     that.setData({
       flag: false
     })
-    if (this.data.currentpage == this.data.totlapages) {
+    if (this.data.currentpage == this.data.totalpages) {
+      //不可以上拉但是可以下拉
       this.setData({
-        noMore: true
+        flag:true
+      })
+      wx.showToast({
+        title: '没有更多了',
+        icon:'none'
       })
       return;
     }
@@ -115,7 +118,7 @@ Page({
             flag: true,
             loading: false,
             articleList: that.data.articleList.concat(res.data.rows),
-            totlapages: res.data.totalPages,
+            totalpages: res.data.totalPages,
             currentpage: that.data.currentpage + 1
           })
         }
@@ -134,23 +137,12 @@ Page({
       }
     })
   },
-  //下拉刷新
-  refresh:function(){
-    if (!this.data.flag) {
-      return
-    }
-    var that = this;
-    that.setData({
-      flag: false
-    })
-    this.setData({
-      refresh: true
-    })
-    //加载内容
-    var that = this;
+  //更新动态列表，并且重新加载
+  getnewContent:function(){
+    var that=this;
     wx.request({
       url: app.globalData.host + '/user/getActionSize',
-      method:'POST',
+      method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded',
         token: token
@@ -165,37 +157,40 @@ Page({
             //提示新增多少动态
             wx.showToast({
               title: '新增' + res.data + '动态',
-              icon: 'none'
-            })
-            //重新加载页面
-            wx.request({
-              url: app.globalData.host + '/user/getActionList',
-              data: {
-                page: 1
-              },
-              header: {
-                token: token
-              },
-              success: function (res) {
-                that.setData({
-                  articleList: res.data.rows,
-                  totlapages: res.data.totalPages
-                })
-              }
+              icon: 'none',
+              duration:3000
             })
           } else {
             //提示暂无新动态
             wx.showToast({
               title: '暂无新动态',
-              icon: 'none'
+              icon: 'none',
+              duration: 3000
             })
+            setTimeout(function(){
+              that.loadContent();
+            },3000)
           }
         }
         else {
           app.dealStatuscode(res.statusCode)
-        }  
+        }
       }
     })
-   
+  },
+  //下拉刷新
+  refresh:function(){
+    if (!this.data.flag) {
+      return
+    }
+    var that = this;
+    that.setData({
+      flag: false
+    })
+    this.setData({
+      refresh: true
+    })
+    //加载内容
+    this.getnewContent();
   }
 })
