@@ -237,7 +237,7 @@ Page({
       }
     })
     //摘要为前100个字
-    if (summary.length < 100)
+    if (summary.length > 100)
       summary = summary.slice(0, 100);
     //提交文章
     wx.request({

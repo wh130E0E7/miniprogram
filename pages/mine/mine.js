@@ -99,7 +99,7 @@ Page({
              //开启websocket连接    
              app.openSocket(app);
               //获取动态数量
-             app.load_action_size();
+             app.load_action_size(app);
            }
          });
       }
@@ -127,6 +127,7 @@ Page({
       var that = this;
       // 获取到用户的信息了，打印到控制台上看下
       this.data.userInfo = e.detail.userInfo;
+      // 
       this.login();
     } else {
       //用户按了拒绝按钮

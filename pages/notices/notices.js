@@ -13,11 +13,12 @@ Page({
   },
   onShow: function() {
     // 页面初始化 options为页面跳转所带来的参数
-    if(app.globalData.newMessageNums>0){
       this.loadLikeMessage();
       this.loadFollowMessage();
       this.loadCommentMessage();
-    }
+      //将新消息数量清零
+      this.clearNewMessageNums();
+      app.globalData.newMessageNums=0;
   },
   onLoad: function(options) {
     token = wx.getStorageSync('token');
@@ -42,6 +43,17 @@ Page({
       })
     }
   },
+  //将该用户的未查看新消息数量减少指定数目
+  clearNewMessageNums:function(){
+    wx.request({
+      url: app.globalData.host +'/message/clearNewMessageNums',
+      method:'POST',
+      header:{
+        token:token,
+        'content-type': 'application/x-www-form-urlencoded',
+      }
+    })
+  },
   //加载点赞消息
   loadLikeMessage: function() {
     var that = this;
@@ -64,6 +76,22 @@ Page({
       }
     })
   },
+  //读点赞消息
+  readLikeMessage:function(e){
+    var that=this;
+    wx.request({
+      url: app.globalData.host +'/message/readLikeMessageByIndex',
+      method:'POST',
+      header:{
+        'content-type': 'application/x-www-form-urlencoded',
+        token:token
+      },
+      data:{
+        index: e.currentTarget.dataset.index,
+        totalNums:that.data.like_totalnums
+      }
+    })
+  },
   //全部已读点赞消息
   likeMessageAllRead: function() {
     var that = this;
@@ -79,7 +107,6 @@ Page({
       },
       success: function(res) {
         if (res.statusCode >= 200 && res.statusCode < 300) {
-          app.globalData.newMessageNums -= that.data.like_totalnums;
           that.loadLikeMessage();
         } else {
           app.dealStatuscode(res.statusCode)
@@ -109,6 +136,23 @@ Page({
       }
     })
   },
+  //单条读评论消息
+  readCommentMessage:function(e){
+    var that = this;
+    console.log(e);
+    wx.request({
+      url: app.globalData.host + '/message/readCommentMessageByIndex',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        token: token
+      },
+      data: {
+        index: e.currentTarget.dataset.index,
+        totalNums: that.data.comment_totalnums
+      }
+    })
+  },
   //评论消息全部已读
   commentMessageAllRead: function() {
     var that = this;
@@ -124,7 +168,6 @@ Page({
       },
       success: function (res) {
         if (res.statusCode >= 200 && res.statusCode < 300) {
-          app.globalData.newMessageNums -= that.data.comment_totalnums;
           that.loadCommentMessage();
         } else {
           app.dealStatuscode(res.statusCode)
@@ -169,7 +212,6 @@ Page({
       },
       success: function (res) {
         if (res.statusCode >= 200 && res.statusCode < 300) {
-          app.globalData.newMessageNums -= that.data.follow_totalnums;
           that.loadFollowMessage();
         } else {
           app.dealStatuscode(res.statusCode)

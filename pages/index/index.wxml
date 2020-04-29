@@ -1,29 +1,35 @@
 <!--pages/detail/detail.wxml-->
 <view>
-<view class="searcharea">
-<navigator class="search" url="../search/search">
-        <icon class="searchcion" size='20' type='search'></icon>
-        <text class="searchtext">搜索文章</text>
-</navigator>
-</view>
+  <view class="searcharea">
+    <navigator class="search" url="../search/search">
+      <icon class="searchcion" size='20' type='search'></icon>
+      <text class="searchtext">搜索文章</text>
+    </navigator>
+  </view>
   <view class="swiper-tab">
     <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">最热</view>
     <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">最新</view>
   </view>
-  <swiper style="height:84vh"  current="{{currentTab}}" duration="300" bindchange="swiperTab">
+  <swiper style="height:84vh" current="{{currentTab}}" duration="300" bindchange="swiperTab">
     <swiper-item>
-      <scroll-view   lower-threshold="20"  bindscrolltolower="hot_loadMore" style="height:100%" scroll-y>
+      <scroll-view lower-threshold="20" bindscrolltoupper="hot_refresh" bindscrolltolower="hot_loadMore" style="height:100%" scroll-y>
+        <view style="text-align: center;margin: 10px;">
+          <view wx:if="{{hot_refresh}}">刷新中...</view>
+        </view>
         <list articleList="{{hotlist}}"></list>
-        <view  class="prompt" style="text-align: center;margin: 10px;">
+        <view class="prompt" style="text-align: center;margin: 10px;">
           <view wx:if="{{hot_loading}}">加载中...</view>
           <view wx:if="{{hot_loadingFailed}}">数据加载失败,请重试</view>
         </view>
       </scroll-view>
     </swiper-item>
     <swiper-item>
-      <scroll-view  lower-threshold="20" bindscrolltolower="new_loadMore"  style="height:100%" scroll-y>
+      <scroll-view lower-threshold="20" bindscrolltoupper="new_refresh" bindscrolltolower="new_loadMore" style="height:100%" scroll-y>
+      <view style="text-align: center;margin: 10px;">
+          <view wx:if="{{new_refresh}}">刷新中...</view>
+        </view>
         <list articleList="{{newlist}}"></list>
-        <view  class="prompt" style="text-align: center;margin: 10px;">
+        <view class="prompt" style="text-align: center;margin: 10px;">
           <view wx:if="{{new_loading}}">加载中...</view>
           <view wx:if="{{new_loadingFailed}}">数据加载失败,请重试</view>
         </view>

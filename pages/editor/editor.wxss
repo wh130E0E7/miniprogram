@@ -3,8 +3,8 @@ page{
   background:rgb(231, 231, 243);
 }
 .input{
-   border:  1px solid rgb(43, 10, 10);
-    border-radius: 5px;
+   border:  1px solid rgb(146, 153, 160);
+    border-radius: 5rpx;
     margin-left: 1px;
     margin-right: 1px;
     margin-top: 1px;
@@ -14,8 +14,7 @@ page{
   background: whitesmoke;
   height: 80rpx;
   display: flex;
-  /*row 横向  column 列表  */
-  flex-direction: row;
+  align-items: center;
 }
 .text{
   width: 300rpx;
@@ -28,16 +27,14 @@ page{
   border:  2px solid rgba(0, 17, 255, 0.616);
    border-radius: 3px;
    height: 60rpx;
-   margin-top: 10rpx;
    width: 140rpx;
    margin-left: 1rpx;
    font-size:40rpx;
   padding-left: 10rpx;
   display: flex;
-  flex-direction: row;
+  align-items: center;
 }
 .below{
-    margin-top:2rpx;
     margin-left: 5rpx;
     width: 50rpx;
     height: 50rpx;
@@ -83,9 +80,12 @@ page{
 .block .block__item{
     margin-top: 0;
 }
-
+.block__toolbox{
+  display: flex;
+  justify-content:flex-end;
+  margin-bottom: 5rpx;
+}
 .block__toolbox .icon{
-    display: inline-block;
     margin-right: 5px;
 }
 .block__item>.weui-cell{
@@ -101,7 +101,7 @@ page{
     padding: 15px 0 !important;
 }
 .u-textarea{
-    height: 100px;
+    
     width: 98%;
     display: block;
     background: white;

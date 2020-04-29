@@ -14,7 +14,6 @@ function upload(url){
       Key: Key,
       FilePath: url,
       onProgress: function (info) {
-        
       }
   }, requestCallback);
   return  'https://img-1301061617.cos.ap-nanjing.myqcloud.com/' + Key ;

@@ -4,12 +4,12 @@
   <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">评论</view>
   <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">关注</view>
 </view>
-<swiper style="height:93vh" current="{{currentTab}}" duration="300"  bindchange="swiperTab">
+<swiper style="height:94vh" current="{{currentTab}}" duration="300"  bindchange="swiperTab">
   <swiper-item>
       <!-- 点赞通知 -->
       <view wx:if="{{likeMessageList.length>0}}">
       <view  bindtap="likeMessageAllRead"   class="allread">全部已读</view>
-      <scroll-view  style="height:100%"   scroll-y>
+      <scroll-view  style="height:89vh"  scroll-y>
         <view class="item" wx:for="{{likeMessageList}}" wx:key="unique">
           <!-- 头像区域 -->
           <view class="avatararea">
@@ -20,7 +20,7 @@
             <!-- 提示信息 -->
             <view class="message"><text class="nickname">@{{item.senderNickname}}</text> 点赞了你的文章</view>
             <!-- 文章标题,点击可以进入文章详情页 -->
-            <navigator url="../detail/detail?articleId={{item.articleId}}">
+            <navigator bindtap="readLikeMessage"  data-index="{{index}}" url="../detail/detail?articleId={{item.articleId}}">
             <view class="title">{{item.title}}</view>
             </navigator>
             <!-- 时间 -->
@@ -39,7 +39,7 @@
      <!-- 评论通知 -->
      <view  wx:if="{{commentMessageList.length>0}}" >
      <view bindtap="commentMessageAllRead"  class="allread">全部已读</view>
-     <scroll-view  style="height:100%" scroll-y>
+     <scroll-view  style="height:89vh" scroll-y>
       <view class="item" wx:for="{{commentMessageList}}" wx:key="unique">
           <!-- 头像区域 -->
           <view class="avatararea">
@@ -48,9 +48,9 @@
           <!-- 内容区域 -->
           <view class="content">
             <!-- 提示信息 -->
-            <view class="message"><text class="nickname">@{{item.senderNickname}}</text> 评论了你的文章</view>
+            <view class="message"><text class="nickname">@{{item.senderNickname}}</text>评论了你的文章</view>
             <!-- 文章标题,点击可以进入文章详情页 -->
-            <navigator url="../detail/detail?articleId={{item.articleId}}">
+            <navigator  bindtap="readCommentMessage"  data-index="{{index}}" url="../detail/detail?articleId={{item.articleId}}">
             <view class="title">{{item.title}}</view>
             </navigator>
             <!-- 时间 -->
@@ -69,7 +69,7 @@
       <!-- 关注通知 -->
       <view wx:if="{{followMessageList.length>0}}">
        <view  bindtap="followMessageAllRead"  class="allread">全部已读</view>
-      <scroll-view  style="height:100%" scroll-y>
+      <scroll-view   style="height:89vh" scroll-y>
       <view class="follow_item" wx:for="{{followMessageList}}" wx:key="unique">
         <image class="follow_avatar" src="{{item.senderAvatarPath}}"></image>
         <view class="follow_nickname"><text class="nickname">@{{item.senderNickname}}</text>关注了你</view>

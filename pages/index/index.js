@@ -14,6 +14,8 @@ Page({
     new_flag: true,
     new_currentpage: 1,
     new_totalpages: null,
+    new_refresh: false,
+    hot_refresh: false,
     new_loading:false,
     new_loadingFailed:false,
     hot_loading: false,
@@ -34,6 +36,9 @@ Page({
       wx.showToast({
         title: '没有更多了',
         icon: 'none'
+      })
+      this.setData({
+        hot_flag: true
       })
       return;
     }else{
@@ -89,6 +94,9 @@ Page({
         title: '没有更多了',
         icon: 'none'
       })
+      this.setData({
+        new_flag: true
+      })
       return;
     }
     this.setData({
@@ -139,19 +147,39 @@ Page({
       that.setData({
         newMessageNums: app.globalData.newMessageNums
       })
-    }, 5000);
-  },
-  //每次返回都自动刷新页面
-  onShow:function(){
+    }, 1000);
     this.loadNewN();
     this.loadTopN();
-    //重新将页面设为1
-    this.setData({
-      hot_currentpage: 1,
-      new_currentpage: 1,
-      new_flag: true,
-      hot_flag: true,
+  },
+  //最热列表下拉刷新
+  hot_refresh: function () {
+    if (!this.data.hot_flag) {
+      return
+    }
+    var that = this;
+    that.setData({
+      hot_flag: false
     })
+    this.setData({
+      hot_refresh: true
+    })
+    //加载内容
+    this.loadTopN();
+  },
+  //最新列表下拉刷新
+  new_refresh: function () {
+    if (!this.data.new_flag) {
+      return
+    }
+    var that = this;
+    that.setData({
+      new_flag: false
+    })
+    this.setData({
+      new_refresh: true
+    })
+    //加载内容
+    this.loadNewN();
   },
   //加载最热文章
   loadTopN:function(){
@@ -168,6 +196,9 @@ Page({
       success:function(res){
         if (res.statusCode >= 200 && res.statusCode < 300) {
           that.setData({
+            hot_flag: true,
+            hot_currentpage:1,
+            hot_refresh:false,
             hotlist: res.data.rows,
             hot_totalpages: res.data.totalPages
           })
@@ -194,6 +225,9 @@ Page({
       success: function (res) {
         if (res.statusCode >= 200 && res.statusCode < 300) {
           that.setData({
+            new_flag: true,
+            new_currentpage: 1,
+            new_refresh: false,
             newlist: res.data.rows,
             new_totalpages: res.data.totalPages
           })

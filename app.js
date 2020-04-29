@@ -32,7 +32,7 @@ App({
     })
   },
   dealStatuscode:function(code){
-  if(code> 500){
+  if(code>= 500){
   wx.showToast({
     title: '服务器故障',
     icon:'none'
@@ -98,7 +98,7 @@ App({
       method:'POST',
       header:{
         'content-type': 'application/x-www-form-urlencoded',
-        token: that.globalData.token
+        token: wx.getStorageSync('token')
       },
       success:function(res){
         if(res.data>0){

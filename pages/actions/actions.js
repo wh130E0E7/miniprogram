@@ -28,11 +28,17 @@ Page({
     })
     if (app.globalData.islogin){
       //因为app加载的时候就已经刷新过一次动态列表了，就直接获取就可以了
+      wx.showLoading({
+        title: '加载中',
+      })
       this.loadContent();
     }
   },
   onShow:function(){
     if (app.globalData.islogin&&!this.data.islogin) {
+      wx.showLoading({
+        title: '加载中',
+      })
       this.getnewContent();
     }
     this.setData({
@@ -41,9 +47,7 @@ Page({
   },
   //加载内容
   loadContent:function(){
-    wx.showLoading({
-      title: '加载中',
-    })
+    
     //隐藏数字红点
     wx.hideTabBarRedDot({
       index: 2
@@ -66,8 +70,7 @@ Page({
           that.setData({
             articleList: res.data.rows,
             totlapages: res.data.totalPages,
-             loading: false,
-            noMore: false,
+            loading: false,
             loadingFailed: false,
             flag: true,
             currentpage:1
@@ -160,17 +163,8 @@ Page({
               icon: 'none',
               duration:3000
             })
-          } else {
-            //提示暂无新动态
-            wx.showToast({
-              title: '暂无新动态',
-              icon: 'none',
-              duration: 3000
-            })
-            setTimeout(function(){
+          } 
               that.loadContent();
-            },3000)
-          }
         }
         else {
           app.dealStatuscode(res.statusCode)
