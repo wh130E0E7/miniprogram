@@ -18,7 +18,7 @@
 }
 .searchtext{
   margin-left: 10rpx;
-  font-size: 30rpx;
+  font-size: 35rpx;
   color: rgb(170, 162, 162);
 }
 .swiper-tab {

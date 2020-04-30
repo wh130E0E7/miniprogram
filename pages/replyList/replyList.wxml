@@ -44,7 +44,7 @@
   <!--编辑位置-->
   <!--回复框-->
   <view class="replyBar">
-    <input class="replyInput" focus="{{focus}}" bindinput="onTextChanged" placeholder="{{placeholder}}"
+    <input class="replyInput"  bindinput="onTextChanged" placeholder="{{placeholder}}"
       value='{{inputcontent}}' />
     <text class="replycancelButton" bindtap="cancel">取消</text>
     <text class="replysendButton" bindtap="sendReply">发表</text>

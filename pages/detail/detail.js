@@ -147,6 +147,10 @@ Page({
     //判断是否登录
     if (!app.globalData.islogin) {
       //提示登录
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      })
     } else {
     //关注，取消关注（需要判断是否登录失效）
       wx.request({
@@ -176,6 +180,10 @@ Page({
     //判断是否登录
     if (!app.globalData.islogin){
       //提示登录
+      wx.showToast({
+        title:'请先登录',
+        icon:'none'
+      })
     }else{
        //点赞，取消点赞（需要判断是否登录失效）
       wx.request({
@@ -192,11 +200,14 @@ Page({
         },
         success:function(res){
           //操作成功
-          if (res.data) {
+          if (res.statusCode >= 200 && res.statusCode < 300) {
             that.setData({
               islike: !that.data.islike
             })
-          } 
+          }
+          else{
+            app.dealStatuscode(res.statusCode)
+          }
         }
       })
     }
@@ -207,6 +218,11 @@ Page({
     //判断是否登录
     if (!app.globalData.islogin) {
       //提示登录
+      //提示登录
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      })
     } else {
       wx.request({
         url: app.globalData.host +'/article/favorite',
@@ -261,6 +277,13 @@ Page({
     if (!app.globalData.islogin){
       wx.showToast({
         title: "请登录",
+        icon: 'none'
+      })
+      return;
+    }
+    if (myComment.trim().length == 0) {
+      wx.showToast({
+        title: '评论不得为空',
         icon: 'none'
       })
       return;
@@ -332,6 +355,13 @@ Page({
   //发表回复
   sendReply:function(){
     var that=this;
+    if (myComment.trim().length == 0) {
+      wx.showToast({
+        title: '回复不得为空',
+        icon: 'none'
+      })
+      return;
+    }
     wx.request({
       url: app.globalData.host +'/article/insertReply',
       method: 'POST',
@@ -350,13 +380,6 @@ Page({
         receiverNickname: that.data.receiverNickname,
         //回复类型
         type: 1
-      },
-      fail: function () {
-        wx.showToast({
-          title: '出错了',
-          icon: 'success',
-          duration: 2000
-        })
       },
       success: function (res) {
         //修改数组的值

@@ -3,3 +3,7 @@
   position: relative;
   z-index: 1;
 }
+.remindmessage{
+justify-content: center;
+display: flex;
+}

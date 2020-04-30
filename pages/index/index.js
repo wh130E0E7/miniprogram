@@ -270,9 +270,12 @@ Page({
         icon: 'none',
       })
       //提示请先登录  
-      wx.switchTab({
-        url: '../mine/mine',
-      })
+      setTimeout(function(){
+        wx.switchTab({
+          url: '../mine/mine',
+        })
+      },2000)
+   
     }
   },
   //点击消息通知界面
@@ -287,9 +290,11 @@ Page({
         title: '请先登录',
         icon: 'none',
       })
-      wx.switchTab({
-        url: '../mine/mine',
-      })
+      setTimeout(function () {
+        wx.switchTab({
+          url: '../mine/mine',
+        })
+      }, 2000)
     }
   }
 

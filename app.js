@@ -1,7 +1,6 @@
 //app.js
 App({ 
   onLaunch: function () {
-    console.log("app--->onLaunch")
     let that = this;
     that.globalData.token =wx.getStorageSync('token')
     wx.request({
@@ -122,6 +121,7 @@ App({
     islogin:false,
     token:null,
     newMessageNums:0,
+    //'https://www.simplecreate.club',
     host:'https://www.simplecreate.club',
     websocketurl:"wss://www.simplecreate.club/websocket/",
     socketStatus: 'closed',

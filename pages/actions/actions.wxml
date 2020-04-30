@@ -10,4 +10,4 @@
   </view>
 </scroll-view>
 </view>
-<view wx:else>请先登录</view>
+<view class='remindmessage' wx:else>请先登录</view>

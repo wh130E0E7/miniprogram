@@ -19,7 +19,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     commentId = options.commentId
     commentSenderId = options.senderid
     senderNickname = options.senderNickname
@@ -30,31 +30,33 @@ Page({
     });
     this.getReplyList();
   },
-  getReplyList: function () {
+  getReplyList: function() {
     var that = this;
     //获取回复列表，回复共有俩种形式，一种直接回复评论，一种回复别人回复
     wx.request({
-      url: app.globalData.host+'/comment/getReplyList',
-      method:'POST',
+      url: app.globalData.host + '/comment/getReplyList',
+      method: 'POST',
       data: {
         commentId: commentId
       },
       header: {
-        'content-type': 'application/x-www-form-urlencoded',// 默认值
+        'content-type': 'application/x-www-form-urlencoded', // 默认值
       },
-      success: function (res) {
+      success: function(res) {
         that.setData({
           replyList: res.data
         })
       }
     })
   },
-  reply: function (e) {
+  reply: function(e) {
     console.log(e);
     //回复回复的情况
     if (!app.globalData.islogin) {
-      //请先登录
-      console.log("请先登录")
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      })
       return;
     }
     this.setData({
@@ -64,7 +66,7 @@ Page({
       receiverId: e.currentTarget.dataset.senderid,
     })
   },
-  cancel: function () {
+  cancel: function() {
     this.setData({
       placeholder: '说些什么吧',
       type: 1,
@@ -72,17 +74,31 @@ Page({
       receiverId: commentSenderId,
     })
   },
-  onTextChanged: function (e) {
+  onTextChanged: function(e) {
     myReply = e.detail.value
   },
   //发表回复
-  sendReply: function () {
+  sendReply: function() {
     var that = this;
+    if (!app.globalData.islogin) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      })
+      return;
+    }
+    if (myReply.trim().length==0){
+      wx.showToast({
+        title: '回复不得为空',
+        icon:'none'
+      })
+      return;
+    }
     wx.request({
-      url: app.globalData.host+'/article/insertReply',
+      url: app.globalData.host + '/article/insertReply',
       method: 'POST',
       header: {
-          'content-type': 'application/x-www-form-urlencoded',// 默认值
+        'content-type': 'application/x-www-form-urlencoded', // 默认值
         token: wx.getStorageSync('token'),
       },
       data: {
@@ -97,44 +113,34 @@ Page({
         //回复类型
         type: that.data.type
       },
-      fail: function () {
-        wx.showToast({
-          title: '出错了',
-          icon: 'success',
-          duration: 2000
-        })
-      },
-      success: function (res) {
+      success: function(res) {
         //修改数组的值
         /* 第一步：先用一个变量，把(info[0].gMoney)用字符串拼接起来。
           第二步：将变量写在[]里面即可。
          */
-        if (res.data == true) {
-          //回复成功
-          wx.showToast({
-            title: '回复成功',
-            icon: 'success',
-            duration: 2000,
-          })
-          //刷新回复列表
-          that.getReplyList();
-          //清空回复内容
-          that.cancel();
-          that.setData({
-            inputcontent: '',
-          })
-        } else if (res.data == false) {
-          wx.showToast({
-            title: '回复失败',
-            icon: 'success',
-            duration: 2000
-          })
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          if (res.data == true) {
+            //回复成功
+            wx.showToast({
+              title: '回复成功',
+              icon: 'success',
+              duration: 2000,
+            })
+            //刷新回复列表
+            that.getReplyList();
+            //清空回复内容
+            that.cancel();
+            that.setData({
+              inputcontent: '',
+            })
+          }else{
+            wx.showToast({
+              title: '回复失败',
+              icon:'none',
+            })
+          }
         } else {
-          wx.showToast({
-            title: '登录过期',
-            icon: 'success',
-            duration: 2000
-          })
+          app.dealStatuscode(res.statusCode)
         }
       }
     })
