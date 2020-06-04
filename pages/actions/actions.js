@@ -165,9 +165,7 @@ Page({
               duration:3000
             })
           } 
-            setTimeout(function(){
-              that.loadContent();
-            },3000)
+            that.loadContent();
         }
         else {
           app.dealStatuscode(res.statusCode)
