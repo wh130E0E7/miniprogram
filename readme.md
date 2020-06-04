@@ -22,7 +22,7 @@
 
 ### 好友动态列表                                           文章创作界面
 
-![image-20200604165348051](D:\Typora的图片\image-20200604165348051.png)![image-20200604165454744](D:\Typora的图片\image-20200604165454744.png)
+![image-20200604165348051](https://img-1301061617.cos.ap-nanjing.myqcloud.com/%E8%BF%90%E8%A1%8C%E6%88%AA%E5%9B%BE/image-20200604165348051.png)![image-20200604165454744](https://img-1301061617.cos.ap-nanjing.myqcloud.com/%E8%BF%90%E8%A1%8C%E6%88%AA%E5%9B%BE/image-20200604165454744.png)
 
 ### 消息通知界面                                           文章详情页面
 
