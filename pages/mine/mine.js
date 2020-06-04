@@ -98,8 +98,10 @@ Page({
              })
              //开启websocket连接    
              app.openSocket(app);
+             //获取新消息
+             app.getNewMessageNum();
               //获取动态数量
-             app.load_action_size(app);
+             app.load_action_size();
            }
          });
       }

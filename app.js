@@ -23,13 +23,34 @@ App({
           that.globalData.userInfo=res.data.userInfo
           that.globalData.islogin=true
            //连接websocket,设置newMessageNum
-          that.openSocket(that);
+           that.openSocket(that);
+           that.getNewMessageNum();
            //判断关注的人有无新动态，有的话在动态栏上显示数字
            that.load_action_size()
         }
       }
     })
   },
+  getNewMessageNum:function(){
+    let that = this;
+    wx.request({
+      url: that.globalData.host + '/message/getNewMessageNum',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        token: wx.getStorageSync('token')
+      },
+      success: function (res) {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+           that.globalData.newMessageNums = res.data;
+        }
+        else {
+         that.dealStatuscode(res.statusCode)
+        }
+      }
+    })
+  },
+
   dealStatuscode:function(code){
   if(code>= 500){
   wx.showToast({

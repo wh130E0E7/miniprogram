@@ -21,6 +21,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onShow:function(){
+    token = wx.getStorageSync('token');
     //一开始未登录后来登录了，要自动刷新页面
     if (app.globalData.islogin&&!this.data.islogin){
       this.setData({
@@ -28,6 +29,7 @@ Page({
         recommend_loadingFailed: false,
         recommend_currentpage: 1,
         recommend_flag: true,
+        recommendlist: [],
       })
       this.loadSetAndGetRecommend();
     }
@@ -37,7 +39,6 @@ Page({
   },
   onLoad: function (options) {
     var that=this;
-    token = wx.getStorageSync('token');
     this.setData({
       islogin: app.globalData.islogin
     })
@@ -135,6 +136,7 @@ Page({
       success: function (res) {
         if (res.statusCode >= 200 && res.statusCode < 300) {
           that.setData({
+            refresh:false,
             recommendlist: res.data.rows,
             recommend_totalpages: res.data.totalPages,
             recommend_currentpage: 1,

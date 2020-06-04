@@ -22,7 +22,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    token=wx.getStorageSync('token'),
+    token = wx.getStorageSync('token');
     this.setData({
       islogin: app.globalData.islogin
     })
@@ -35,6 +35,8 @@ Page({
     }
   },
   onShow:function(){
+    token = wx.getStorageSync('token');
+    console.log(token)
     if (app.globalData.islogin&&!this.data.islogin) {
       wx.showLoading({
         title: '加载中',
@@ -46,8 +48,7 @@ Page({
     })
   },
   //加载内容
-  loadContent:function(){
-    
+  loadContent:function(){   
     //隐藏数字红点
     wx.hideTabBarRedDot({
       index: 2
@@ -164,7 +165,9 @@ Page({
               duration:3000
             })
           } 
+            setTimeout(function(){
               that.loadContent();
+            },3000)
         }
         else {
           app.dealStatuscode(res.statusCode)
